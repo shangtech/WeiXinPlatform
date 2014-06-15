@@ -10,35 +10,35 @@ import javax.persistence.Transient;
 import net.shangtech.ssh.core.base.IBaseEntity;
 
 @Entity
-@Table(name = "WX_MENU")
+@Table(name = "wx_menu")
 public class WxMenu extends IBaseEntity {
 	private static final long serialVersionUID = 1L;
 	
-	@Column(name = "SYS_USER_ID")
+	@Column(name = "sys_user_id")
 	private Integer sysUserId;
 	
-	@Column(name = "PARENT_ID")
+	@Column(name = "parent_id")
 	private Integer parentId;
 	
-	@Column(name = "MENU_NAME")
+	@Column(name = "menu_name")
 	private String menuName;
 	
-	@Column(name = "MENU_TYPE")
+	@Column(name = "menu_type")
 	private Integer menuType;
 	
-	@Column(name = "MENU_URL")
+	@Column(name = "menu_url")
 	private String menuUrl;
 	
-	@Column(name = "MENU_KEY")
+	@Column(name = "menu_key")
 	private String menuKey;
 	
-	@Column(name = "SORT")
+	@Column(name = "sort")
 	private Integer sort;
 	
-	@Column(name = "REPLY_TYPE")
+	@Column(name = "reply_type")
 	private Integer replyType;
 	
-	@Column(name = "REPLY_CONTENT")
+	@Column(name = "reply_content")
 	private String replyContent;
 	
 	@Transient

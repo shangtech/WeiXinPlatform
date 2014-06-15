@@ -9,33 +9,33 @@ import javax.persistence.Table;
 import net.shangtech.ssh.core.base.IBaseEntity;
 
 @Entity
-@Table(name = "WX_MESSAGE")
+@Table(name = "wx_message")
 public class WxMessage extends IBaseEntity {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Column(name = "MSG_TITLE")
+	@Column(name = "msg_title")
 	private String title;
 	
-	@Column(name = "SUMMARY")
+	@Column(name = "summary")
 	private String summary;
 	
-	@Column(name = "IMAGE")
+	@Column(name = "image")
 	private String image;
 	
-	@Column(name = "MSG_CONTENT")
+	@Column(name = "msg_content")
 	private String content;
 	
-	@Column(name = "MSG_URL")
+	@Column(name = "msg_url")
 	private String url;
 	
-	@Column(name = "CREATE_TIME")
+	@Column(name = "create_time")
 	private Date createtTime;
 	
-	@Column(name = "SYS_USER_ID")
+	@Column(name = "sys_user_id")
 	private Integer sysUserId;
 	
-	@Column(name = "MAIN_ID")
+	@Column(name = "main_id")
 	private Integer mainId;
 	
 	public String getTitle() {

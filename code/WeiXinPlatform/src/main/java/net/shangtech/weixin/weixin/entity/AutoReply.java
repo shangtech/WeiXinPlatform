@@ -9,27 +9,27 @@ import javax.persistence.Table;
 import net.shangtech.ssh.core.base.IBaseEntity;
 
 @Entity
-@Table(name = "AUTO_REPLY")
+@Table(name = "auto_reply")
 public class AutoReply extends IBaseEntity {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Column(name = "RULE_NAME")
+	@Column(name = "rule_name")
 	private String name;
 	
-	@Column(name = "KEYWORDS")
+	@Column(name = "keywords")
 	private String keywords;
 	
-	@Column(name = "REPLY_TYPE")
+	@Column(name = "reply_type")
 	private Integer type;
 	
-	@Column(name = "REPLY_CONTENT")
+	@Column(name = "reply_content")
 	private String content;
 	
-	@Column(name = "CREATE_TIME")
+	@Column(name = "create_time")
 	private Date createTime;
 	
-	@Column(name = "SYS_USER_ID")
+	@Column(name = "sys_user_id")
 	private Integer sysUserId;
 
 	public String getName() {

@@ -9,56 +9,56 @@ import javax.persistence.Table;
 import net.shangtech.ssh.core.base.IBaseEntity;
 
 @Entity
-@Table(name = "SYS_USER")
+@Table(name = "sys_user")
 public class SysUser extends IBaseEntity {
 	private static final long serialVersionUID = 1L;
 	
-	@Column(name = "USER_TYPE")
+	@Column(name = "user_type")
 	private Integer userType;
 	
-	@Column(name = "USERNAME")
+	@Column(name = "username")
 	private String username;
 	
-	@Column(name = "PASSWORD")
+	@Column(name = "password")
 	private String password;
 	
-	@Column(name = "MOBILE")
+	@Column(name = "mobile")
 	private String mobile;
 	
-	@Column(name = "EMAIL")
+	@Column(name = "email")
 	private String email;
 	
-	@Column(name = "QQ")
+	@Column(name = "qq")
 	private String qq;
 	
-	@Column(name = "CREATE_TIME")
+	@Column(name = "create_time")
 	private Date createTime;
 	
-	@Column(name = "WX_NAME")
+	@Column(name = "wx_name")
 	private String wxName;
 	
-	@Column(name = "WX_NUMBER")
+	@Column(name = "wx_number")
 	private String wxNumber;
 	
-	@Column(name = "TOKEN")
+	@Column(name = "token")
 	private String token;
 	
-	@Column(name = "APPID")
+	@Column(name = "appid")
 	private String appId;
 	
-	@Column(name = "APPKEY")
+	@Column(name = "appkey")
 	private String appKey;
 	
-	@Column(name = "PROVINCE")
+	@Column(name = "province")
 	private String province;
 	
-	@Column(name = "CITY")
+	@Column(name = "city")
 	private String city;
 	
-	@Column(name = "DESCRIPTION")
+	@Column(name = "description")
 	private String description;
 	
-	@Column(name = "OPENID")
+	@Column(name = "openid")
 	private String openid;
 
 	public String getUsername() {
