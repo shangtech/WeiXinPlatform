@@ -34,7 +34,7 @@
       <div class="row-fluid msg-edit-container">
         <div class="msg-preview">
         	<div class="msg-item-wrapper" id="appmsg" data-appid="" data-create-time="">
-                <div id="appmsgItem1" class="msg-item appmsgItem">
+                <div id="appmsgItem" class="msg-item appmsgItem">
                     <h4 class="msg-t"> 
 						<span id="titleSpan" class="i-title">标题</span> 
 					</h4>
@@ -49,17 +49,19 @@
         </div>
         <div class="msg-edit-wrapper">
         <div class="msg-edit-area">
-        	<form class="form-horizontal">
+        	<form class="form-horizontal" action="save.htm" method="post">
         		<div class="control-group">
         			<label for="title" class="control-label">标题</label>
         			<div class="controls">
         				<input type="text" id="title" name="title" class="span9"/>
+        				<input name="id" type="hidden" value="${param.id}"/>
         			</div>
         		</div>
         		<div class="control-group">
         			<label for="title" class="control-label">封面</label>
         			<div class="controls uploader">
-        				<input type="file" id="image" name="image" class="span9"/>
+        				<input type="file" id="image" class="span9" data-for="image"/>
+        				<input type="hidden" id="image_hidden" name="image"/>
         				<div class="input-append span9">
         					<span class="span12 fileholder" id="fileholder-image">请选择文件</span>
         					<span class="btn span2 filebtn action" id="filebtn-image">选择</span>
@@ -79,6 +81,9 @@
         			</div>
         		</div>
         	</form>
+        	<form id="imageForm" style="display:none;" action="${ctx}/manage/service/messages/image/save.htm" enctype="multipart/form-data" method="post">
+        		<input type="file" name="image"/>
+        	</form>
         	<span class="msg-arrow a-out" style="margin-top: 0px;"></span>
         	<span class="msg-arrow a-in" style="margin-top: 0px;"></span>
         </div>
@@ -93,7 +98,28 @@
 <script type="text/javascript">
 var editor;
 $(document).ready(function(){
-	
+	$('body').on('change', '#image', function(){
+		var temp = $(this).clone(), next = this.nextSibling;
+		$('#imageForm').html('').append($(this).attr('id', '').attr('name', 'image'));
+		temp.insertBefore($(next));
+		$('#imageForm').ajaxSubmit({
+			dataType: 'json',
+			success: function(result){
+				if(!result.success){
+					alert(result.msg);
+					return;
+				}
+				$('#image_hidden').val(result.msg);
+				$('#appmsgItem .i-img').attr('src', ctx + '/' + result.msg);
+			}
+		});
+	});
+	$('#title').change(function(){
+		$('#appmsgItem .i-title').html($(this).val());
+	});
+	$('#summary').change(function(){
+		$('#appmsgItem .msg-text').html($(this).val());
+	});
 });
 KindEditor.ready(function(K){
 	editor = K.create('#content', {

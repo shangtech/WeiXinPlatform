@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	//alert($('body input type["file"]').length);
-	$('body input[type="file"]').on({
+	$('body').on({
 		mouseover: function(){
 			var id = $(this).attr('id');
 			$('#filebtn-'+id).addClass('hover');
@@ -18,8 +18,8 @@ $(document).ready(function(){
 			$('#filebtn-'+id).removeClass('active');
 		},
 		change: function(){
-			var id = $(this).attr('id');
+			var id = $(this).attr('data-for');
 			$('#fileholder-'+id).html($(this).val());
 		}
-	});
+	}, 'input[type="file"]');
 });

@@ -1,12 +1,16 @@
 package net.shangtech.weixin.sys.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.shangtech.ssh.core.base.BaseController;
 import net.shangtech.ssh.core.base.Page;
+import net.shangtech.ssh.core.util.FileUtils;
 import net.shangtech.weixin.sys.entity.SysUser;
 import net.shangtech.weixin.weixin.entity.WxMenu;
 import net.shangtech.weixin.weixin.entity.WxMessage;
@@ -18,6 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -190,6 +196,35 @@ public class ServiceController extends BaseController {
 	public String messagesSave(HttpServletResponse response){
 		this.response = response;
 		return null;
+	}
+	private static List<String> ALLOW_TYPES = Arrays.asList(".jpg", ".jpeg", ".png");
+	@RequestMapping("/messages/image/save")
+	public String imageSave(HttpServletResponse response, HttpServletRequest request){
+		this.response = response;
+		MultipartFile file = null;
+		try{
+			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+			file = multipartRequest.getFile("image");
+			if(file == null){
+				return failed("文件上传失败");
+			}
+			String name = file.getOriginalFilename();
+			if(StringUtils.isBlank(name) || !name.contains(".")){
+				return failed("文件格式错误");
+			}
+			String extend = name.substring(name.lastIndexOf("."));
+			if(!ALLOW_TYPES.contains(extend)){
+				return failed("不支持的文件格式");
+			}
+			String path = FileUtils.saveStreamToFile(file.getInputStream(), file.getOriginalFilename());
+			return success(path);
+		}catch(ClassCastException e){
+			e.printStackTrace();
+			return failed("保存文件失败");
+		}catch(IOException e){
+			e.printStackTrace();
+			return failed("保存文件失败");
+		}
 	}
 	@RequestMapping("/messages/delete")
 	public String deleteMessages(HttpServletResponse response){
