@@ -61,8 +61,8 @@
         			<div class="controls uploader">
         				<input type="file" id="image" name="image" class="span9"/>
         				<div class="input-append span9">
-        					<span class="span12 fileholder">请选择文件</span>
-        					<span class="btn span2 filebtn action">Go!</span>
+        					<span class="span12 fileholder" id="fileholder-image">请选择文件</span>
+        					<span class="btn span2 filebtn action" id="filebtn-image">选择</span>
         				</div>
         			</div>
         		</div>
@@ -88,7 +88,8 @@
   </div>
 </div>
 <script type="text/javascript" src="${ctx}/components/kindeditor/kindeditor-min.js"></script>
-<script type="text/javascript" src="${ctx}/components/kindeditor/lang/zn_CN.js"></script>
+<script type="text/javascript" src="${ctx}/components/kindeditor/lang/zh_CN.js"></script>
+<script type="text/javascript" src="${ctx}/components/bootstrap.singlefile.js"></script>
 <script type="text/javascript">
 var editor;
 $(document).ready(function(){
