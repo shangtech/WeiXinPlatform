@@ -3,8 +3,8 @@
 #################
 
 *.pydevproject
-.project
-.metadata
+#.project
+#.metadata
 bin/
 tmp/
 code/WeiXinplatform/WebRoot/WEB-INF/classes/*
@@ -28,7 +28,7 @@ local.properties
 .cproject
 
 # PDT-specific
-.buildpath
+#.buildpath
 
 
 #################
