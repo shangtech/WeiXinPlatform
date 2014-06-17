@@ -21,7 +21,7 @@
 		<property name="timeBetweenEvictionRunsMillis" value="300000"></property>
 		<property name="numTestsPerEvictionRun" value="3"></property>
 		<property name="minEvictableIdleTimeMillis" value="300000"></property>
-		<property name="url" value="jdbc:mysql://localhost:3306/weixin"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/weixinplatform"></property>
 		<property name="username" value="root"></property>
 		<property name="password" value="liwentao"></property>
 		
