@@ -122,13 +122,19 @@
       <version>1.2_04</version>
       <scope>provided</scope>
     </dependency>
+	<dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>5.1.31</version>
+	</dependency>
+    
   </dependencies>
   <build>
-    <sourceDirectory>${basedir}/src</sourceDirectory>
+    <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
     <outputDirectory>${basedir}/WebRoot/WEB-INF/classes</outputDirectory>
     <resources>
       <resource>
-        <directory>${basedir}/src</directory>
+        <directory>${basedir}/src/main/java</directory>
         <excludes>
           <exclude>**/*.java</exclude>
         </excludes>

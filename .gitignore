@@ -4,18 +4,19 @@
 
 *.pydevproject
 #.project
-#.metadata
+.metadata
 bin/
 tmp/
 code/WeiXinplatform/WebRoot/WEB-INF/classes/*
 code/WeiXinplatform/WebRoot/upload/*
+code/WeiXinplatform/WebRoot/target/*
 *.tmp
 *.bak
 *.swp
 *~.nib
-local.properties
+.settings/
+#local.properties
 #.classpath
-#.settings/
 #.loadpath
 
 # External tool builders
