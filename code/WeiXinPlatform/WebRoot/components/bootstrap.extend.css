@@ -39,7 +39,7 @@
 .cover .msg-t {position: absolute;bottom: 0;width: 100%;overflow: hidden;margin: 0;color: #fff;background: rgba(0, 0, 0, 0.6) !important;filter: progid:dximagetransform.microsoft.gradient(GradientType=0,startColorstr='#82000000', endColorstr='#82000000')}
 .cover .i-title {display: block;padding-left: 4px;padding-right: 4px}
 .cover img {width: 100%}
-.default-tip {display: block;text-align: center;background-color: #ececec;text-shadow: 0 1px 0 #fff;-webkit-text-shadow: 0 1px 0 #fff;-moz-text-shadow: 0 1px 0 #fff}
+.default-tip {display: block;text-align: center;background-color: #fff;text-shadow: 0 1px 0 #fff;-webkit-text-shadow: 0 1px 0 #fff;-moz-text-shadow: 0 1px 0 #fff}
 .cover .default-tip {font-size: 22px;color: #aaa;line-height: 160px}
 .sub-msg-item {padding: 12px 14px;overflow: hidden;zoom: 1;border-top: 1px solid #c6c6c6}
 .sub-msg-item .msg-t {margin-left: 0;margin-right: 85px;margin-top: 0;padding-left: 4px;padding-top: 12px;line-height: 24px;max-height: 48px;font-size: 14px;overflow: hidden}
@@ -52,7 +52,7 @@
 .msg-arrow.a-out{border-color: transparent #b8b8b8 transparent transparent;border-width: 12px 14px 12px 0;position:absolute;left: -14px;top: 43px;border-style:dashed solid dashed;}
 
 .uploader{position:relative;}
-.uploader input[type="file"]{opacity:0;position:absolute;z-index:10;}
+.uploader input[type="file"]{opacity:0;position:absolute;left:0px;top:0px;z-index:10;}
 .uploader .fileholder{font-size:14px;padding:4px 12px;overflow:hidden;border-top:1px solid rgba(0, 0, 0, 0.14902);border-bottom:1px solid rgba(0, 0, 0, 0.14902);border-left:1px solid rgba(0, 0, 0, 0.14902);border-radius: 4px;}
 .uploader .filebtn{margin:0px;position:absolute;right:0px;top:0px;}
 .uploader .input-append{float:left;padding:0px;margin:0px;position:relative;}

@@ -29,6 +29,9 @@
 <div class="container">
   <div class="row">
     <div class="span12">
+    	<div class="pull-right">
+     	 <a href="javascript:history.go(-1);" id="addMenuBtn" class="btn">返回</a>
+      	</div>
       <h4 class="header">单图文消息</h4>
       <div id="d3" style="width: 100%; margin-top: -30px"></div><br />
       <div class="row-fluid msg-edit-container">
@@ -46,10 +49,13 @@
                     <p class="msg-text">封面图片封面图片</p>
                  </div>
              </div>
+             <div>
+             	<span class="btn span12" id="saveBtn">保     存</span>
+             </div>
         </div>
         <div class="msg-edit-wrapper">
         <div class="msg-edit-area">
-        	<form class="form-horizontal" action="save.htm" method="post">
+        	<form class="form-horizontal" action="${ctx}/manage/service/messages/single/save.htm" method="post" id="messageForm">
         		<div class="control-group">
         			<label for="title" class="control-label">标题</label>
         			<div class="controls">
@@ -98,6 +104,24 @@
 <script type="text/javascript">
 var editor;
 $(document).ready(function(){
+	$('#messageForm').validate({
+		rules: {
+			title: {
+				required: true
+			},
+			image: {
+				required: true
+			}
+		},
+		messages: {
+			title: {
+				required: '标题必填'
+			},
+			image: {
+				required: '请上传封面'
+			}
+		}
+	});
 	$('body').on('change', '#image', function(){
 		var temp = $(this).clone(), next = this.nextSibling;
 		$('#imageForm').html('').append($(this).attr('id', '').attr('name', 'image'));
@@ -119,6 +143,20 @@ $(document).ready(function(){
 	});
 	$('#summary').change(function(){
 		$('#appmsgItem .msg-text').html($(this).val());
+	});
+	$('#saveBtn').click(function(){
+		if($('#messageForm').valid()){
+			$('#messageForm').ajaxSubmit({
+				dataType: 'json',
+				success: function(result){
+					alert(result.msg);
+					if(!result.success){
+						return;
+					}
+					document.location.href = '${ctx}/manage/service/messages.htm';
+				}
+			});
+		}
 	});
 });
 KindEditor.ready(function(K){

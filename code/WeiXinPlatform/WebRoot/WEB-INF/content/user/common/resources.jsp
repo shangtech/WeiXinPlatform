@@ -19,6 +19,7 @@
     <script src="${ctx}/components/user/js/jquery.tablesorter.min.js"></script>
     <script src="${ctx}/components/user/js/jquery.peity.min.js"></script>
     <script src="${ctx}/components/user/js/jquery.validate.js"></script>
+    <script src="${ctx}/components/user/js/jquery.validate.extend.js"></script>
     <script src="${ctx}/components/user/js/jquery.form.js"></script>
     <script src="${ctx}/components/user/js/fullcalendar.min.js"></script>
     <script src="${ctx}/components/user/js/gcal.js"></script>

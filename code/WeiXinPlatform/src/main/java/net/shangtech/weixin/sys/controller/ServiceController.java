@@ -3,6 +3,7 @@ package net.shangtech.weixin.sys.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -192,8 +193,17 @@ public class ServiceController extends BaseController {
 		
 		return "user/service/multiple-messages";
 	}
-	@RequestMapping("/mesages/save")
-	public String messagesSave(HttpServletResponse response){
+	@RequestMapping("/messages/single/save")
+	public String singleMessagesSave(WxMessage message, HttpServletResponse response){
+		this.response = response;
+		SysUser user = getUser();
+		message.setSysUserId(user.getId());
+		message.setCreatetTime(new Date());
+		messageService.saveMessages(Arrays.asList(message));
+		return success();
+	}
+	@RequestMapping("/messages/multiple/save")
+	public String multipleMessagesSave(HttpServletResponse response){
 		this.response = response;
 		return null;
 	}

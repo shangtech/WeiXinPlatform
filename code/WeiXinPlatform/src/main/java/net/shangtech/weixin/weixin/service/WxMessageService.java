@@ -18,6 +18,7 @@ public class WxMessageService extends BaseService<WxMessage> {
 	
 	@Autowired private WxMessageDao dao;
 	
+	@Transactional(readOnly = true)
 	public Page<WxMessage> findMessageByPage(int pageNo, int pageSize, int sysUserId){
 		Page<WxMessage> page = new Page<WxMessage>(pageSize);
 		page.setPageNo(pageNo);
@@ -27,7 +28,23 @@ public class WxMessageService extends BaseService<WxMessage> {
 	}
 	
 	public void saveMessages(List<WxMessage> list){
-		
+		for(WxMessage message : list){
+			if(message.getId() == null){
+				dao.insert(message);
+				continue;
+			}
+			WxMessage old = dao.find(message.getId());
+			if(old == null){
+				dao.insert(message);
+				continue;
+			}
+			old.setTitle(message.getTitle());
+			old.setContent(message.getContent());
+			old.setImage(message.getImage());
+			old.setSummary(message.getSummary());
+			old.setUrl(message.getUrl());
+			dao.update(old);
+		}
 	}
 
 	@Override
