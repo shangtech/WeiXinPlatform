@@ -9,7 +9,7 @@ bin/
 tmp/
 code/WeiXinplatform/WebRoot/WEB-INF/classes/*
 code/WeiXinplatform/WebRoot/upload/*
-code/WeiXinplatform/WebRoot/target/*
+code/WeiXinplatform/target/*
 *.tmp
 *.bak
 *.swp
