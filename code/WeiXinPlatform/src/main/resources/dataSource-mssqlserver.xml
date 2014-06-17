@@ -21,11 +21,6 @@
 		<property name="timeBetweenEvictionRunsMillis" value="300000"></property>
 		<property name="numTestsPerEvictionRun" value="3"></property>
 		<property name="minEvictableIdleTimeMillis" value="300000"></property>
-		<!--
-		<property name="url" value="jdbc:jtds:sqlserver://weixin.300188.cn/xmmyweixin"></property>
-		<property name="username" value="sql_for_300188_wx"></property>
-		<property name="password" value="Are@you#Ok118$weibo"></property>
-		-->
 		<property name="url" value="jdbc:jtds:sqlserver://localhost/weixinplatform"></property>
 		<property name="username" value="sa"></property>
 		<property name="password" value="19900212"></property>
