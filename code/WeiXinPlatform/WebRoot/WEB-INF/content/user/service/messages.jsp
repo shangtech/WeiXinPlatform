@@ -38,7 +38,44 @@
       <h4 class="header">图文消息列表</h4>
       <div id="d3" style="width: 100%; margin-top: -30px"></div><br />
       <div class="row-fluid">
-        
+        <c:forEach items="${page.result}" var="item" varStatus="i">
+        <c:if test="${i.index%2 eq 0}">
+        <div class="row-fluid">
+        </c:if>
+        	<div class="span6">
+        		<div class="msg-preview container">
+        			<div class="msg-item-wrapper" data-create-time="">
+		                <div id="appmsgItem" class="msg-item appmsgItem">
+		                    <h4 class="msg-t"> 
+								<span id="titleSpan" class="i-title">标题</span> 
+							</h4>
+		                    <p class="msg-meta"><span class="msg-date">2014-06-15</span></p>
+		                    <div class="cover">
+		                        <p class="default-tip" style="">封面图片</p>
+		                        <img src="http://fengchaodata.com:80/images/res/guaguaka1.png" class="i-img" style="margin-top:-164px;"> 
+							</div>
+		                    <p class="msg-text">封面图片封面图片</p>
+		                 </div>
+		                 <div class="msg-opr">
+		                 	<ul class="f0 msg-opr-list">
+		                 		<li class="b-dib opr-item">
+		                 			<a class="block tc opr-btn edit-btn" href="javascript:void(0);" data-mid="2308">
+		                 				<span class="th vm dib opr-icon edit-icon">编辑</span>
+		                 			</a>
+		                 		</li><li class="b-dib opr-item">
+		                 			<a class="block tc opr-btn del-btn" href="javascript:void(0);" data-mid="2308">
+		                 				<span class="th vm dib opr-icon del-icon">删除</span>
+		                 			</a>
+		                 		</li>
+		                 	</ul>
+		                 </div>
+		             </div>
+        		</div>
+        	</div>
+        <c:if test="${(i.index%2 eq 1) or ((i.index+1) eq fn:length(page.result))}">
+        </div>
+        </c:if>
+        </c:forEach>
       </div>
     </div>
   </div>

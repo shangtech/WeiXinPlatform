@@ -35,7 +35,7 @@
       <h4 class="header">单图文消息</h4>
       <div id="d3" style="width: 100%; margin-top: -30px"></div><br />
       <div class="row-fluid msg-edit-container">
-        <div class="msg-preview">
+        <div class="msg-preview" style="position:absolute;">
         	<div class="msg-item-wrapper" id="appmsg" data-appid="" data-create-time="">
                 <div id="appmsgItem" class="msg-item appmsgItem">
                     <h4 class="msg-t"> 
