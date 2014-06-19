@@ -5,6 +5,7 @@
 *.pydevproject
 #.project
 .metadata
+.mymetadata
 bin/
 tmp/
 code/WeiXinplatform/WebRoot/WEB-INF/classes/*
