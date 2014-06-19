@@ -44,7 +44,7 @@
 .cover .default-tip {font-size: 22px;color: #aaa;line-height: 160px}
 .sub-msg-item {padding: 12px 14px;overflow: hidden;zoom: 1;border-top: 1px solid #c6c6c6}
 .sub-msg-item .msg-t {margin-left: 0;margin-right: 85px;margin-top: 0;padding-left: 4px;padding-top: 12px;line-height: 24px;max-height: 48px;font-size: 14px;overflow: hidden}
-.thumb {float: right;font-size: 0}
+.thumb {float: right;font-size: 0;line-height:0px;}
 .thumb img {width: 70px;height: 70px;border: 1px solid #b2b8bd}
 .thumb .default-tip {font-size: 16px;color: #c0c0c0;width: 70px;line-height: 70px;border: 1px solid #b2b8bd}
 .msg-opr-list {padding: 10px 0;letter-spacing: -5px;border-radius: 0 0 5px 5px;-webkit-border-radius: 0 0 5px 5px;-moz-border-radius: 0 0 5px 5px;list-style:none;list-style-type:none;margin:0px !important;}
