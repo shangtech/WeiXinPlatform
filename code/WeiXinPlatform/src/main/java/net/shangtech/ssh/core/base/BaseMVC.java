@@ -99,6 +99,15 @@ public abstract class BaseMVC {
 		renderResult(false, msg);
 		return null;
 	}
+	public Integer getInt(String name){
+		String value = getRequest().getParameter(name);
+		if(value != null && !"".equals(value))
+			return Integer.parseInt(value);
+		return null;
+	}
+	public String getString(String name){
+		return getRequest().getParameter(name);
+	}
 	public String noSelected(){
 		renderResult(false, "请先选择需要操作的记录");
 		return null;

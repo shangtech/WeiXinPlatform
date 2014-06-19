@@ -42,20 +42,50 @@
         <c:if test="${i.index%2 eq 0}">
         <div class="row-fluid">
         </c:if>
-        	<div class="span6">
+        	<div style="display:none;">
+        		<c:forEach items="${page.result}" var="item">
         		<div class="msg-preview container">
         			<div class="msg-item-wrapper" data-create-time="">
+        				<c:if test="${empty message.subMessages}">
 		                <div id="appmsgItem" class="msg-item appmsgItem">
 		                    <h4 class="msg-t"> 
-								<span id="titleSpan" class="i-title">标题</span> 
+								<span id="titleSpan" class="i-title">${item.title}</span> 
 							</h4>
-		                    <p class="msg-meta"><span class="msg-date">2014-06-15</span></p>
+		                    <p class="msg-meta"><span class="msg-date"><fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd"/></span></p>
 		                    <div class="cover">
 		                        <p class="default-tip" style="">封面图片</p>
-		                        <img src="http://fengchaodata.com:80/images/res/guaguaka1.png" class="i-img" style="margin-top:-164px;"> 
+		                        <img src="${ctx}/${item.image}" class="i-img" style="margin-top:-164px;"> 
 							</div>
-		                    <p class="msg-text">封面图片封面图片</p>
+		                    <p class="msg-text">${item.summary}</p>
 		                 </div>
+		                 </c:if>
+		                 <c:if test="${empty message.subMessages}">
+		                 <div class="msg-item multi-msg">
+		                 	<div class="appmsgItem" id="appmsgItem_1" >
+		                		<p class="msg-meta"> 
+									<span class="msg-date"><fmt:formatDate value="${message.createTime}" pattern="yyyy-MM-dd"/></span> 
+								</p>
+								<div class="cover">
+									<p class="default-tip" style="">封面图片</p>
+									<h4 class="msg-t"> 
+										<span id="titleSpan" class="i-title">${message.title}</span>
+									</h4>
+									<img src="${ctx}/${message.image}" class="i-img" style="margin-top:-213px;">
+								</div>
+		                	</div>
+		                	<c:forEach items="${message.subMessages" var="item">
+		                	<div class="rel sub-msg-item appmsgItem"> 
+								<span class="thumb"> 
+									<span class="default-tip" style="">缩略图</span> 
+									<img src="${ctx}/${item.images}" class="i-img" style="margin-top:-72px;"> 
+								</span>
+		                        <h4 class="msg-t"> 
+									<span class="i-title">${item.title}</span> 
+								</h4>
+		                      </div>
+		                      </c:forEach>
+		                 </div>
+		                 </c:if>
 		                 <div class="msg-opr">
 		                 	<ul class="f0 msg-opr-list">
 		                 		<li class="b-dib opr-item">
@@ -71,6 +101,10 @@
 		                 </div>
 		             </div>
         		</div>
+        		</c:forEach>
+        	</div>
+        	<div class="span6">
+        		
         	</div>
         <c:if test="${(i.index%2 eq 1) or ((i.index+1) eq fn:length(page.result))}">
         </div>

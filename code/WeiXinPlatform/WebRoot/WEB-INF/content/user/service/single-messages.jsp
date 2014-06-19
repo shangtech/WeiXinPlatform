@@ -39,14 +39,19 @@
         	<div class="msg-item-wrapper" id="appmsg" data-appid="" data-create-time="">
                 <div id="appmsgItem" class="msg-item appmsgItem">
                     <h4 class="msg-t"> 
-						<span id="titleSpan" class="i-title">标题</span> 
+						<span id="titleSpan" class="i-title">${item.title}</span> 
 					</h4>
-                    <p class="msg-meta"><span class="msg-date">2014-06-15</span></p>
+                    <p class="msg-meta"><span class="msg-date"><fmt:formatDate value="${message.createTime}" pattern="yyyy-MM-dd"/></span></p>
                     <div class="cover">
                         <p class="default-tip" style="">封面图片</p>
-                        <img src="http://fengchaodata.com:80/images/res/guaguaka1.png" class="i-img" style="margin-top:-164px;"> 
+                        <c:if test="${empty message.image}">
+                        <img src="" class="i-img" style="display:none;margin-top:-164px;"> 
+                        </c:if>
+                        <c:if test="${not empty message.image}">
+                        <img src="${ctx}/${message.image}" class="i-img" style="margin-top:-164px;"> 
+                        </c:if>
 					</div>
-                    <p class="msg-text">封面图片封面图片</p>
+                    <p class="msg-text">${message.summary}</p>
                  </div>
              </div>
              <div>
@@ -59,7 +64,7 @@
         		<div class="control-group">
         			<label for="title" class="control-label">标题</label>
         			<div class="controls">
-        				<input type="text" id="title" name="title" class="span9"/>
+        				<input type="text" id="title" name="title" class="span9" value="${item.title}"/>
         				<input name="id" type="hidden" value="${param.id}"/>
         			</div>
         		</div>
@@ -67,7 +72,7 @@
         			<label for="title" class="control-label">封面</label>
         			<div class="controls uploader">
         				<input type="file" id="image" class="span9" data-for="image"/>
-        				<input type="hidden" id="image_hidden" name="image"/>
+        				<input type="hidden" id="image_hidden" name="image" value="${item.image}"/>
         				<div class="input-append span9">
         					<span class="span12 fileholder" id="fileholder-image">请选择文件</span>
         					<span class="btn span2 filebtn action" id="filebtn-image">选择</span>
@@ -77,13 +82,13 @@
         		<div class="control-group">
         			<label for="summary" class="control-label">摘要</label>
         			<div class="controls">
-        				<textarea type="text" id="summary" name="summary" class="span9" rows="3"></textarea>
+        				<textarea type="text" id="summary" name="summary" class="span9" rows="3">${message.summary}</textarea>
         			</div>
         		</div>
         		<div class="control-group">
         			<label for="content" class="control-label">正文</label>
         			<div class="controls">
-        				<textarea id="content" name="content" class="span9" rows="8" style="display: none;"></textarea>
+        				<textarea id="content" name="content" class="span9" rows="8" style="display: none;">${message.content}</textarea>
         			</div>
         		</div>
         	</form>
@@ -101,71 +106,7 @@
 <script type="text/javascript" src="${ctx}/components/kindeditor/kindeditor-min.js"></script>
 <script type="text/javascript" src="${ctx}/components/kindeditor/lang/zh_CN.js"></script>
 <script type="text/javascript" src="${ctx}/components/bootstrap.singlefile.js"></script>
-<script type="text/javascript">
-var editor;
-$(document).ready(function(){
-	$('#messageForm').validate({
-		rules: {
-			title: {
-				required: true
-			},
-			image: {
-				required: true
-			}
-		},
-		messages: {
-			title: {
-				required: '标题必填'
-			},
-			image: {
-				required: '请上传封面'
-			}
-		}
-	});
-	$('body').on('change', '#image', function(){
-		var temp = $(this).clone(), next = this.nextSibling;
-		$('#imageForm').html('').append($(this).attr('id', '').attr('name', 'image'));
-		temp.insertBefore($(next));
-		$('#imageForm').ajaxSubmit({
-			dataType: 'json',
-			success: function(result){
-				if(!result.success){
-					alert(result.msg);
-					return;
-				}
-				$('#image_hidden').val(result.msg);
-				$('#appmsgItem .i-img').attr('src', ctx + '/' + result.msg);
-			}
-		});
-	});
-	$('#title').change(function(){
-		$('#appmsgItem .i-title').html($(this).val());
-	});
-	$('#summary').change(function(){
-		$('#appmsgItem .msg-text').html($(this).val());
-	});
-	$('#saveBtn').click(function(){
-		if($('#messageForm').valid()){
-			$('#messageForm').ajaxSubmit({
-				dataType: 'json',
-				success: function(result){
-					alert(result.msg);
-					if(!result.success){
-						return;
-					}
-					document.location.href = '${ctx}/manage/service/messages.htm';
-				}
-			});
-		}
-	});
-});
-KindEditor.ready(function(K){
-	editor = K.create('#content', {
-		width:666,
-		height:400
-	});
-});
-</script>
+<script type="text/javascript" src="${ctx}/components/js/user/service/single-messages.js"></script>
       </div>
     </div>
     <footer>

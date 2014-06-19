@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -185,12 +186,25 @@ public class ServiceController extends BaseController {
 	
 	@RequestMapping("/messages/single")
 	public String messageEditSingle(){
-		
+		WxMessage message = new WxMessage();
+		message.setCreateTime(new Date());
+		Integer id = getId();
+		if(id != null){
+			message = messageService.find(id);
+		}
+		request.setAttribute("message", message);
 		return "user/service/single-messages";
 	}
 	@RequestMapping("/messages/multiple")
 	public String messageEditMultiple(){
-		
+		WxMessage message = new WxMessage();
+		message.setCreateTime(new Date());
+		Integer id = getId();
+		if(id != null){
+			message = messageService.find(id);
+			message.setSubMessages(messageService.find("where mainId=?", message.getId()));
+		}
+		request.setAttribute("message", message);
 		return "user/service/multiple-messages";
 	}
 	@RequestMapping("/messages/single/save")
@@ -198,13 +212,26 @@ public class ServiceController extends BaseController {
 		this.response = response;
 		SysUser user = getUser();
 		message.setSysUserId(user.getId());
-		message.setCreatetTime(new Date());
+		message.setCreateTime(new Date());
 		messageService.saveMessages(Arrays.asList(message));
 		return success();
 	}
 	@RequestMapping("/messages/multiple/save")
 	public String multipleMessagesSave(HttpServletResponse response){
 		this.response = response;
+		String ids = request.getParameter("ids");
+		//ids是各个表单字段后缀,ids出现的顺序也就是消息的顺序
+		String[] idArr = ids.split(",");
+		List<WxMessage> list = new LinkedList<WxMessage>();
+		for(String id : idArr){
+			WxMessage message = new WxMessage();
+			message.setId(getInt("id_"+id));
+			message.setTitle(getString("title_"+id));
+			message.setImage(getString("image_"+id));
+			message.setContent(getString("content_"+id));
+			list.add(message);
+		}
+		messageService.saveMessages(list);
 		return null;
 	}
 	private static List<String> ALLOW_TYPES = Arrays.asList(".jpg", ".jpeg", ".png");

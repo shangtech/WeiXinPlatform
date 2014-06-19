@@ -1,10 +1,12 @@
 package net.shangtech.weixin.weixin.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import net.shangtech.ssh.core.base.IBaseEntity;
 
@@ -30,13 +32,16 @@ public class WxMessage extends IBaseEntity {
 	private String url;
 	
 	@Column(name = "create_time")
-	private Date createtTime;
+	private Date createTime;
 	
 	@Column(name = "sys_user_id")
 	private Integer sysUserId;
 	
 	@Column(name = "main_id")
 	private Integer mainId;
+	
+	@Transient
+	private List<WxMessage> subMessages;
 	
 	public String getTitle() {
 		return title;
@@ -68,11 +73,11 @@ public class WxMessage extends IBaseEntity {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	public Date getCreatetTime() {
-		return createtTime;
+	public Date getCreateTime() {
+		return createTime;
 	}
-	public void setCreatetTime(Date createtTime) {
-		this.createtTime = createtTime;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 	public Integer getSysUserId() {
 		return sysUserId;
@@ -85,6 +90,12 @@ public class WxMessage extends IBaseEntity {
 	}
 	public void setMainId(Integer mainId) {
 		this.mainId = mainId;
+	}
+	public List<WxMessage> getSubMessages() {
+		return subMessages;
+	}
+	public void setSubMessages(List<WxMessage> subMessages) {
+		this.subMessages = subMessages;
 	}
 	
 }
