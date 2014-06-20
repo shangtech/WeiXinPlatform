@@ -38,9 +38,9 @@
         <div class="msg-preview" style="position:absolute;">
         	<div class="msg-item-wrapper" id="appmsg" data-appid="" data-create-time="">
         		<form id="multiMsgForm" action="${ctx}/manage/service/messages/multiple/save.htm" method="post" style="margin:0px;">
-        		<input type="hidden" name="ids"/>
+        		<input type="hidden" name="ids" id="ids"/>
                 <div class="msg-item multi-msg">
-                	<div class="appmsgItem" id="appmsgItem_1" >
+                	<div class="appmsgItem" id="appmsgItem_1" data-id="1">
                 		<p class="msg-meta"> 
 							<span class="msg-date"><fmt:formatDate value="${message.createTime}" pattern="yyyy-MM-dd"/></span> 
 						</p>
@@ -68,7 +68,7 @@
 						</div>
                 	</div>
                 	<c:if test="${empty message.subMessages}">
-                	<div class="rel sub-msg-item appmsgItem" id="appmsgItem_2"> 
+                	<div class="rel sub-msg-item appmsgItem" id="appmsgItem_2" data-id="2"> 
 						<span class="thumb"> 
 							<span class="default-tip" style="">缩略图</span> 
 							<img src="" class="i-img" style="display:none;margin-top:-72px;"> 
@@ -90,11 +90,11 @@
                     </div>
                     </c:if>
                     <c:if test="${not empty message.subMessages}">
-                    <c:forEach items="${message.subMessages" var="item" varStatus="i">
-                	<div class="rel sub-msg-item appmsgItem" id="appmsgItem_${i.index+2}"> 
+                    <c:forEach items="${message.subMessages}" var="item" varStatus="i">
+                	<div class="rel sub-msg-item appmsgItem" id="appmsgItem_${i.index+2}" data-id="${i.index+2}"> 
 						<span class="thumb"> 
 							<span class="default-tip" style="">缩略图</span> 
-							<img src="${ctx}/${item.images}" class="i-img" style="margin-top:-72px;"> 
+							<img src="${ctx}/${item.image}" class="i-img" style="margin-top:-72px;"> 
 							<input type="hidden" value="${item.image}" name="image_${i.index+2}"/> 
 							<input type="hidden" value="" name="local_${i.index+2}"/>
 							<input type="hidden" value="${item.id}" name="id_${i.index+2}"/>

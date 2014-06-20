@@ -219,12 +219,14 @@ public class ServiceController extends BaseController {
 	@RequestMapping("/messages/multiple/save")
 	public String multipleMessagesSave(HttpServletResponse response){
 		this.response = response;
+		SysUser user = getUser();
 		String ids = request.getParameter("ids");
 		//ids是各个表单字段后缀,ids出现的顺序也就是消息的顺序
 		String[] idArr = ids.split(",");
 		List<WxMessage> list = new LinkedList<WxMessage>();
 		for(String id : idArr){
 			WxMessage message = new WxMessage();
+			message.setSysUserId(user.getId());
 			message.setId(getInt("id_"+id));
 			message.setTitle(getString("title_"+id));
 			message.setImage(getString("image_"+id));
@@ -232,7 +234,7 @@ public class ServiceController extends BaseController {
 			list.add(message);
 		}
 		messageService.saveMessages(list);
-		return null;
+		return success();
 	}
 	private static List<String> ALLOW_TYPES = Arrays.asList(".jpg", ".jpeg", ".png");
 	@RequestMapping("/messages/image/save")

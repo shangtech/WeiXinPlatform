@@ -37,29 +37,24 @@
       	</div>
       <h4 class="header">图文消息列表</h4>
       <div id="d3" style="width: 100%; margin-top: -30px"></div><br />
-      <div class="row-fluid">
-        <c:forEach items="${page.result}" var="item" varStatus="i">
-        <c:if test="${i.index%2 eq 0}">
-        <div class="row-fluid">
-        </c:if>
         	<div style="display:none;">
-        		<c:forEach items="${page.result}" var="item">
-        		<div class="msg-preview container">
+        		<c:forEach items="${page.result}" var="message" varStatus="i">
+        		<div class="msg-preview container" data-index="${i.index}">
         			<div class="msg-item-wrapper" data-create-time="">
         				<c:if test="${empty message.subMessages}">
 		                <div id="appmsgItem" class="msg-item appmsgItem">
 		                    <h4 class="msg-t"> 
-								<span id="titleSpan" class="i-title">${item.title}</span> 
+								<span id="titleSpan" class="i-title">${message.title}</span> 
 							</h4>
-		                    <p class="msg-meta"><span class="msg-date"><fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd"/></span></p>
+		                    <p class="msg-meta"><span class="msg-date"><fmt:formatDate value="${message.createTime}" pattern="yyyy-MM-dd"/></span></p>
 		                    <div class="cover">
 		                        <p class="default-tip" style="">封面图片</p>
-		                        <img src="${ctx}/${item.image}" class="i-img" style="margin-top:-164px;"> 
+		                        <img src="${ctx}/${message.image}" class="i-img" style="margin-top:-164px;"> 
 							</div>
-		                    <p class="msg-text">${item.summary}</p>
+		                    <p class="msg-text">${message.summary}</p>
 		                 </div>
 		                 </c:if>
-		                 <c:if test="${empty message.subMessages}">
+		                 <c:if test="${not empty message.subMessages}">
 		                 <div class="msg-item multi-msg">
 		                 	<div class="appmsgItem" id="appmsgItem_1" >
 		                		<p class="msg-meta"> 
@@ -73,11 +68,11 @@
 									<img src="${ctx}/${message.image}" class="i-img" style="margin-top:-213px;">
 								</div>
 		                	</div>
-		                	<c:forEach items="${message.subMessages" var="item">
+		                	<c:forEach items="${message.subMessages}" var="item">
 		                	<div class="rel sub-msg-item appmsgItem"> 
 								<span class="thumb"> 
 									<span class="default-tip" style="">缩略图</span> 
-									<img src="${ctx}/${item.images}" class="i-img" style="margin-top:-72px;"> 
+									<img src="${ctx}/${item.image}" class="i-img" style="margin-top:-72px;"> 
 								</span>
 		                        <h4 class="msg-t"> 
 									<span class="i-title">${item.title}</span> 
@@ -89,7 +84,12 @@
 		                 <div class="msg-opr">
 		                 	<ul class="f0 msg-opr-list">
 		                 		<li class="b-dib opr-item">
-		                 			<a class="block tc opr-btn edit-btn" href="javascript:void(0);" data-mid="2308">
+		                 		<c:if test="${not empty message.subMessages}">
+		                 			<a class="block tc opr-btn edit-btn" href="${ctx}/manage/service/messages/multiple.htm?id=${message.id}" data-mid="2308">
+		                 		</c:if>
+		                 		<c:if test="${empty message.subMessages}">
+		                 			<a class="block tc opr-btn edit-btn" href="${ctx}/manage/service/messages/single.htm?id=${message.id}" data-mid="2308">
+		                 		</c:if>
 		                 				<span class="th vm dib opr-icon edit-icon">编辑</span>
 		                 			</a>
 		                 		</li><li class="b-dib opr-item">
@@ -103,20 +103,29 @@
         		</div>
         		</c:forEach>
         	</div>
-        	<div class="span6">
+       <div>
+       <div class="row-fluid">
+        	<div class="span6" id="col-left">
         		
         	</div>
-        <c:if test="${(i.index%2 eq 1) or ((i.index+1) eq fn:length(page.result))}">
+        	<div class="span6" id="col-right">
+        		
+        	</div>
         </div>
-        </c:if>
-        </c:forEach>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript">
 $(document).ready(function(){
-	
+	var left = $('#col-left'), right = $('#col-right');
+	$('.msg-preview').each(function(){
+		if(left.height() > right.height()){
+			right.append($(this));
+		}else{
+			left.append($(this));
+		}
+	});
 });
 </script>
       </div>

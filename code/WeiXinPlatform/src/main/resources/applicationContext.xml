@@ -12,11 +12,16 @@
 		http://www.springframework.org/schema/context
 		http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	<import  resource="dataSource-mssqlserver.xml"/>
-
+	
 	<context:component-scan base-package="net.shangtech.weixin.*.dao"></context:component-scan>
 	<context:component-scan base-package="net.shangtech.weixin.*.service"></context:component-scan>
+	
+	<bean id="sqlDao" class="net.shangtech.ssh.core.base.SqlDao">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	<!-- 测试证明如果service方法里包含hibernateDao和jdbcDao操作异常可以回滚 -->
 	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory"></property>
+		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 </beans>

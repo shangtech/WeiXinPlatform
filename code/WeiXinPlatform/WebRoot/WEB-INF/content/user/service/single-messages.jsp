@@ -39,7 +39,7 @@
         	<div class="msg-item-wrapper" id="appmsg" data-appid="" data-create-time="">
                 <div id="appmsgItem" class="msg-item appmsgItem">
                     <h4 class="msg-t"> 
-						<span id="titleSpan" class="i-title">${item.title}</span> 
+						<span id="titleSpan" class="i-title">${message.title}</span> 
 					</h4>
                     <p class="msg-meta"><span class="msg-date"><fmt:formatDate value="${message.createTime}" pattern="yyyy-MM-dd"/></span></p>
                     <div class="cover">
@@ -64,7 +64,7 @@
         		<div class="control-group">
         			<label for="title" class="control-label">标题</label>
         			<div class="controls">
-        				<input type="text" id="title" name="title" class="span9" value="${item.title}"/>
+        				<input type="text" id="title" name="title" class="span9" value="${message.title}"/>
         				<input name="id" type="hidden" value="${param.id}"/>
         			</div>
         		</div>
@@ -72,7 +72,7 @@
         			<label for="title" class="control-label">封面</label>
         			<div class="controls uploader">
         				<input type="file" id="image" class="span9" data-for="image"/>
-        				<input type="hidden" id="image_hidden" name="image" value="${item.image}"/>
+        				<input type="hidden" id="image_hidden" name="image" value="${message.image}"/>
         				<div class="input-append span9">
         					<span class="span12 fileholder" id="fileholder-image">请选择文件</span>
         					<span class="btn span2 filebtn action" id="filebtn-image">选择</span>
