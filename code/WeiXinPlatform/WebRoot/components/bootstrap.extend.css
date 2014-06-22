@@ -48,131 +48,48 @@
 .thumb img {width: 70px;height: 70px;border: 1px solid #b2b8bd}
 .thumb .default-tip {font-size: 16px;color: #c0c0c0;width: 70px;line-height: 70px;border: 1px solid #b2b8bd}
 .msg-opr-list {padding: 10px 0;letter-spacing: -5px;border-radius: 0 0 5px 5px;-webkit-border-radius: 0 0 5px 5px;-moz-border-radius: 0 0 5px 5px;list-style:none;list-style-type:none;margin:0px !important;}
-.opr-item {
-	width: 50%;
-	font-size: 14px;
-	letter-spacing: normal;
-	display:inline-block;
-}
-.msg-selected .msg-mask {
-	display: block
-}
-
-.msg-hover-mask {
-	display: none;
-	position: absolute;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	background: rgba(0, 0, 0, 0.6) !important;
-	filter: progid:dximagetransform.microsoft.gradient(GradientType=0,
-		startColorstr='#60000000', endColorstr='#60000000')
-}
-
-.msg-hover .msg-hover-mask {
-	display: block
-}
-
-.sub-msg-opr {
-	top: 0;
-	left:100%;
-	height: 100%;
-	width: 100%;
-	background-color: #e5e5e5;
-	background: rgba(229, 229, 229, 0.85);
-	filter: progid:dximagetransform.microsoft.gradient(GradientType=0,
-		startColorstr='#85E5E5E5', endColorstr='#85E5E5E5')
-		alpha(opacity = 85);
-	margin:0px !important;
-	list-style:none;
-	list-style-type:none;
-}
-.sub-msg-opr-show .sub-msg-opr {
-	left: 0
-}
-
-.sub-msg-opr-item {
-	margin: 40px 20px 0;
-	font-size: 0
-}
-
-.cover .sub-msg-opr-item {
-	margin-top: 70px;
-}
+.opr-item {width: 50%;font-size: 14px;letter-spacing: normal;display:inline-block;}
+.msg-selected .msg-mask {display: block}
+.msg-hover-mask {display: none;position: absolute;top: 0;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.6) !important;filter: progid:dximagetransform.microsoft.gradient(GradientType=0,startColorstr='#60000000', endColorstr='#60000000')}
+.msg-hover .msg-hover-mask {display: block}
+.sub-msg-opr {top: 0;left:100%;height: 100%;width: 100%;background-color: #e5e5e5;background: rgba(229, 229, 229, 0.85);filter: progid:dximagetransform.microsoft.gradient(GradientType=0,startColorstr='#85E5E5E5', endColorstr='#85E5E5E5') alpha(opacity = 85);margin:0px !important;list-style:none;list-style-type:none;}
+.sub-msg-opr-show .sub-msg-opr {left: 0}
+.sub-msg-opr-item {margin: 40px 20px 0;font-size: 0}
+.cover .sub-msg-opr-item {margin-top: 70px;}
 .block{display:block;}
 .dib,.b-dib{display:inline-block;}
 .tc{text-align:center;}
 .th{line-height:150px;overflow:hidden;}
 .abs{position:absolute;}
 .rel{position:relative;}
-.opr-btn {
-	padding: 2px 0
-}
-.edit-btn {
-	border-right: 1px solid #a3a3a3
-}
-.del-btn {
-	border-left: 1px solid #fefefe
-}
-.opr-icon {
-	width: 18px;
-	height: 18px;
-	background: transparent url('images/icon18.png') no-repeat;
-	vertical-align: middle;
-display: inline-block;
-}
-.edit-icon {
-	background-position: 0 -139px
-}
-
-.del-icon {
-	background-position: 0 -195px
-}
-
-.opr-btn:hover .edit-icon {
-	background-position: -28px -139px
-}
-
-.opr-btn:hover .del-icon {
-	background-position: -28px -195px
-}
+.opr-btn {padding: 2px 0}
+.edit-btn {border-right: 1px solid #a3a3a3}
+.del-btn {border-left: 1px solid #fefefe}
+.opr-icon {width: 18px;height: 18px;background: transparent url('images/icon18.png') no-repeat;vertical-align: middle;display: inline-block;}
+.edit-icon {background-position: 0 -139px}
+.del-icon {background-position: 0 -195px}
+.opr-btn:hover .edit-icon {background-position: -28px -139px}
+.opr-btn:hover .del-icon {background-position: -28px -195px}
 .msg-arrow.a-in{border-color: transparent #f8f8f8 transparent transparent;border-width: 11px 13px 11px 0;position:absolute;left:-12px;top: 44px;border-style:dashed solid dashed;}
 .msg-arrow.a-out{border-color: transparent #b8b8b8 transparent transparent;border-width: 12px 14px 12px 0;position:absolute;left: -14px;top: 43px;border-style:dashed solid dashed;}
-.msg-preview .sub-add {
-	display: block
-}
-.add-btn-show .add-btn {
-	display: inline-block
-}
-
-.add-btn-show .add-tip {
-	display: none;
-}
-
-.sub-add {
-	display: none;
-	padding: 12px 14px;
-	border-top: 1px solid #c6c6c6
-}
-
-.sub-add-btn {
-	line-height: 70px;
-	color: #222;
-	border: 2px dotted #b8b8b8;
-	border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px
-}
-
-.sub-add-icon {
-	width: 18px;
-	height: 18px;
-	margin-right: 5px;
-	background: transparent url('images/icon18.png') no-repeat 0 -83px
-}
+.msg-preview .sub-add {display: block}
+.add-btn-show .add-btn {display: inline-block}
+.add-btn-show .add-tip {display: none;}
+.sub-add {display: none;padding: 12px 14px;border-top: 1px solid #c6c6c6}
+.sub-add-btn {line-height: 70px;color: #222;border: 2px dotted #b8b8b8;border-radius: 5px;-webkit-border-radius: 5px;-moz-border-radius: 5px}
+.sub-add-icon {width: 18px;height: 18px;margin-right: 5px;background: transparent url('images/icon18.png') no-repeat 0 -83px}
 .uploader{position:relative;}
 .uploader input[type="file"]{opacity:0;position:absolute;left:0px;top:0px;z-index:10;}
 .uploader .fileholder{font-size:14px;padding:4px 12px;overflow:hidden;border-top:1px solid rgba(0, 0, 0, 0.14902);border-bottom:1px solid rgba(0, 0, 0, 0.14902);border-left:1px solid rgba(0, 0, 0, 0.14902);border-radius: 4px;}
 .uploader .filebtn{margin:0px;position:absolute;right:0px;top:0px;}
 .uploader .input-append{float:left;padding:0px;margin:0px;position:relative;}
 .btn.hover {background-color: #e6e6e6;*background-color: #d9d9d9;color: #333333;text-decoration: none;background-position: 0 -15px;-webkit-transition: background-position 0.1s linear;-moz-transition: background-position 0.1s linear;-o-transition: background-position 0.1s linear;transition: background-position 0.1s linear;}
+
+.menu-action-area{display:none;}
+.menu-action-area.on{display:block;}
+.menu_action_btn{display:block;margin-top:10px;margin-bottom:10px;width:144px;}
+.menu_action_icon{display: inline-block;width:144px;height:144px;background: transparent url("images/icon144_action_type.png") no-repeat;}
+.menu_action_icon.menu_send_icon{background-position:0 0;}
+.menu_action_btn strong{display:block;text-align:center;}
+.menu-action-types .span6{text-align:center;}
+.menu_action_btn:hover .menu_send_icon {background-position: -144px 0;}

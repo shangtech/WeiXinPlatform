@@ -1,5 +1,10 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/content/common/taglibs.jsp"%>
+<%@ page import="net.shangtech.weixin.type.ReplyType"%>
+<c:set var="reply_url" value="<%=ReplyType.URL%>"></c:set>
+<c:set var="reply_text" value="<%=ReplyType.TEXT%>"></c:set>
+<c:set var="reply_news" value="<%=ReplyType.NEWS%>"></c:set>
+<c:set var="reply_activity" value="<%=ReplyType.ACTIVITY%>"></c:set>
 <!DOCTYPE html>
 <html>
   <head>
@@ -74,7 +79,63 @@
         				</div>
         			</td>
         			<td>
-        				
+        				<c:forEach items="${list}" var="item">
+        				<div class="menu-action-area" id="menu-action-${item.id}">
+        					<c:if test="${not empty item.children}">
+        						<p>已有子菜单，无法设置动作。</p>
+        					</c:if>
+        					<c:if test="${empty item.children}">
+        						<c:if test="${not empty item.replyType}">
+        							<c:if test="${item.replyType eq reply_url}">
+        								<p>点击该菜单会跳转到链接：${item.menuUrl}</p>
+        							</c:if>
+        							<c:if test="${item.replyType eq reply_text}">
+	        							<p>点击菜单将会收到消息：</p>
+	        							<p>${item.replyContent}</p>
+        							</c:if>
+        							<c:if test="${(item.replyType eq reply_news) or (item.replyType eq reply_activity)}">
+	        							<p>点击菜单将会收到消息：</p>
+	        							
+        							</c:if>
+        						</c:if>
+        						<c:if test="${empty item.replyType}">
+        						<div>
+        							
+        						</div>
+        						</c:if>
+        					</c:if>
+        				</div>
+        				</c:forEach>
+        				<div class="menu-action-area1" id="menu-action-types">
+        					<div class="row-fluid">
+        						<div class="span6">
+        							<a class="menu_action_btn container" href="javascript:;">
+        								<i class="menu_action_icon menu_send_icon"></i>
+        								<strong class="action_btn_text">文本消息</strong>
+        							</a>
+        						</div>
+        						<div class="span6">
+        							<a class="menu_action_btn container" href="javascript:;">
+        								<i class="menu_action_icon menu_send_icon"></i>
+        								<strong class="action_btn_news">图文消息</strong>
+        							</a>
+        						</div>
+        					</div>
+        					<div class="row-fluid">
+        						<div class="span6">
+        							<a class="menu_action_btn container" href="javascript:;">
+        								<i class="menu_action_icon menu_send_icon"></i>
+        								<strong class="action_btn_url">网页跳转</strong>
+        							</a>
+        						</div>
+        						<div class="span6">
+        							<a class="menu_action_btn container" href="javascript:;">
+        								<i class="menu_action_icon menu_send_icon"></i>
+        								<strong class="action_btn_activity">活动消息</strong>
+        							</a>
+        						</div>
+        					</div>
+        				</div>
         			</td>
         		</tr>
         	</tbody>

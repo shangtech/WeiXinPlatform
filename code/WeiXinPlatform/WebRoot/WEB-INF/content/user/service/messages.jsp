@@ -61,7 +61,7 @@
 									<span class="msg-date"><fmt:formatDate value="${message.createTime}" pattern="yyyy-MM-dd"/></span> 
 								</p>
 								<div class="cover">
-									<p class="default-tip" style="">封面图片</p>
+									<p class="default-tip" style="display:none;">封面图片</p>
 									<h4 class="msg-t"> 
 										<span id="titleSpan" class="i-title">${message.title}</span>
 									</h4>

@@ -149,5 +149,6 @@ $(document).ready(function(){
 			$('#menulist .on').removeClass('on');
 			node.addClass('on');
 		}
+		
 	});
 });
