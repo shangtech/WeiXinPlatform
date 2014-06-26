@@ -15,4 +15,13 @@ public class MainController {
 	public String service(){
 		return "user/service";
 	}
+	
+	/**
+	 * 微应用主页面
+	 * @return
+	 */
+	@RequestMapping("/application")
+	public String application(){
+		return "user/application";
+	}
 }

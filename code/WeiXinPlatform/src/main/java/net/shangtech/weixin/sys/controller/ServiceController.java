@@ -29,6 +29,14 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.alibaba.fastjson.JSONObject;
 
+/**
+ * 微信基础服务相关功能
+ * 比如自定义菜单
+ * 图文消息设置
+ * 自动回复设置
+ * @author songxh
+ *
+ */
 @Controller
 @RequestMapping("/manage/service")
 public class ServiceController extends BaseController {

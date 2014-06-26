@@ -55,6 +55,7 @@ public class WxMessageService extends BaseService<WxMessage> {
 		//不管是修改还是添加,上面已经把mainId都设为空了,所以数据库剩余的mainId为主消息ID的记录就是被删除的,先统一删除,再统一设置mainId
 		if(list.size() > 1){
 			WxMessage main = list.remove(0);
+			//jdbc跟hibernate放在同一个事务里还不知道行不行
 			sqlDao.update("delete from wx_message where main_id=?", main.getId());
 			for(WxMessage message : list){
 				message.setMainId(main.getId());
