@@ -93,3 +93,5 @@
 .menu_action_btn strong{display:block;text-align:center;}
 .menu-action-types .span6{text-align:center;}
 .menu_action_btn:hover .menu_send_icon {background-position: -144px 0;}
+
+.accordion.no-padding .accordion-inner{padding:0px;}
