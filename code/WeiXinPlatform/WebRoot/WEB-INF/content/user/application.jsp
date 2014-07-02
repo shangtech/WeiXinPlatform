@@ -27,7 +27,7 @@
       <div class="page-container">
 <div class="container">
   <div class="row">
-    <jsp:include page="/WEB-INF/content/user/common/menu-service.jsp">
+    <jsp:include page="/WEB-INF/content/user/common/menu-application.jsp">
     	<jsp:param value="wxmenu" name="current"/>
     </jsp:include>
     <div class="span9">

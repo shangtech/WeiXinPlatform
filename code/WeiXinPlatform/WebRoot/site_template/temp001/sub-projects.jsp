@@ -16,8 +16,8 @@
         			<td class="nopadding">
         				<div id="menulist">
         					<c:forEach items="${typeList}" var="item">
-        					<div class="menunode" id="node-${item.id}">
-        						<a href="#"><span class="menuname">${item.name}</span></a>
+        					<div class="menunode" id="node-${item.id}" data-id="${item.id}">
+        						<a href="#"><span class="menuname name">${item.name}</span></a>
         						<div class="btns">
 	        						<a href="#" class="edit"><i class="icon-pencil"></i></a>
 	        						<a href="#" class="del"><i class="icon-trash"></i></a>
@@ -28,7 +28,7 @@
         				</div>
         			</td>
         			<td>
-        				
+        				<div class="center"><a href="javascript:;" id="addProjectBtn" class="btn btn-primary btn-large">添加楼盘</a></div>
         			</td>
         		</tr>
         	</tbody>
@@ -41,7 +41,7 @@
     <h3>楼盘分类</h3>
   </div>
   <div class="modal-body">
-    <form class="form-horizontal" method="post" action="type/save.htm"/>
+    <form class="form-horizontal" method="post" action="type/save.htm">
       <div class="control-group">
         <label for="typeName" class="control-label">分类名称 </label>
         <div class="controls">
@@ -55,6 +55,13 @@
   	<a href="#" data-dismiss="modal" class="btn">取消</a>
   	<a href="#" class="btn btn-primary submit">保存</a>
   </div>
+</div>
+<div id="projectFormModal" class="modal hide fade" data-backdrop="static">
+	<div class="modal-header">
+    	<button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+    	<h3>楼盘详情</h3>
+  	</div>
+  	<div class="modal-body"></div>
 </div>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -88,20 +95,44 @@ $(document).ready(function(){
 						return;
 					}
 					if(id){
-						$('#node-'+id+' .menuname').html(typeName);
+						$('#node-'+id+' .name').html(typeName);
 					}else{
-						var html = '<div class="menunode" id="node-'+result.id+'">'
-        						 + '	<a href="#"><span class="menuname">'+typeName+'</span></a>'
+						var html = '<div class="menunode" id="node-'+result.id+'" data-id="'+result.id+'">'
+        						 + '	<a href="#"><span class="menuname name">'+typeName+'</span></a>'
         						 + '	<div class="btns">'
 	        					 + '		<a href="#" class="edit"><i class="icon-pencil"></i></a>'
 	        					 + '		<a href="#" class="del"><i class="icon-trash"></i></a>'
 	        					 + '	</div>'
 	        					 + '	<a href="#" class="move"><i class="icon-align-justify"></i></a>'
-        						 + '</div>'
+        						 + '</div>';
+        				$('#menulist').append(html);
 					}
+					$('#typeFormModal').modal('toggle');
 				}
 			});
 		}
+	});
+	$('#menulist').on('click', '.edit', function(){
+		$('#typeId').val($(this).parent().parent().attr('data-id'));
+		$('#typeName').val($(this).parent().parent().find('.name').html());
+		$('#typeFormModal').modal('toggle');
+	});
+	$('#menulist').on('click', '.del', function(){
+		$.ajax({
+			url: '${ctx}/manage/application/property/type/delete.htm?id='+$(this).parent().parent().attr('data-id'),
+			dataType: 'json',
+			success: function(result){
+				if(!result.success){
+					alert(result.msg);
+					return;
+				}
+				$(this).parent().parent().remove();
+			}
+		});
+	});
+	$('#addProjectBtn').click(function(){
+		$('#projectFormModal').modal('toggle');
+		$('#projectFormModal .modal-body').load('${ctx}/manage/application/property/project/form.htm');
 	});
 });
 </script>

@@ -1,10 +1,12 @@
 package net.shangtech.weixin.sys.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
 
 import net.shangtech.ssh.core.base.BaseController;
-import net.shangtech.weixin.property.dao.ProjectService;
 import net.shangtech.weixin.property.entity.ProjectType;
+import net.shangtech.weixin.property.service.ProjectService;
 import net.shangtech.weixin.sys.entity.SysUser;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +36,9 @@ public class PropertyController extends BaseController {
 	 */
 	@RequestMapping("/projects")
 	public String projects(){
-		
+		SysUser user = getUser();
+		List<ProjectType> typeList = projectService.findProjectTypesByUser(user.getId());
+		request.setAttribute("typeList", typeList);
 		return PATH + "/frame";
 	}
 	
@@ -64,6 +68,34 @@ public class PropertyController extends BaseController {
 		obj.put("id", type.getId());
 		outJson(obj.toJSONString());
 		return null;
+	}
+	
+	/**
+	 * 删除楼盘类型
+	 * @author songxh
+	 * @createtime 2014-7-2下午09:57:40
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/type/delete")
+	public String propertyTypeDelete(HttpServletResponse response){
+		this.response = response;
+		Integer id = getId();
+		projectService.deleteProjectType(id);
+		return success();
+	}
+	
+	@RequestMapping("/project/save")
+	public String saveProject(HttpServletResponse response){
+		this.response = response;
+		
+		return null;
+	}
+	
+	@RequestMapping("/project/form")
+	public String projectForm(){
+		
+		return PATH + "/project-form";
 	}
 	
 }

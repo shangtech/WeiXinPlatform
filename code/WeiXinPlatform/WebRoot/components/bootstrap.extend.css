@@ -26,6 +26,8 @@
 .msg-edit-area{position:relative;background-color: #f8f8f8;border: 1px solid #b8b8b8;border-radius: 5px;box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);moz-border-radius: 5px;moz-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);padding: 14px 22px 20px 20px;webkit-border-radius: 5px;webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);}
 .msg-edit-area form label{width:40px !important;}
 .msg-edit-area form .controls{margin-left:60px;}
+form.form-condensed label{width:80px !important;}
+form.form-condensed .controls{margin-left:100px;}
 
 .msg-item-wrapper {position: relative;margin-bottom: 26px;border: 1px solid #d3d3d3;background-color: #f4f4f4;box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);-webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);-moz-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);border-radius: 5px;-webkit-border-radius: 5px;-moz-border-radius: 5px}
 .msg-item {padding: 2px 0;background-color: #fff;border-bottom: 1px solid #ccc;box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);-webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);-moz-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);border-radius: 5px 5px 0 0;-webkit-border-radius: 5px 5px 0 0;-moz-border-radius: 5px 5px 0 0}
@@ -95,3 +97,4 @@
 .menu_action_btn:hover .menu_send_icon {background-position: -144px 0;}
 
 .accordion.no-padding .accordion-inner{padding:0px;}
+.center{text-align:center;}
