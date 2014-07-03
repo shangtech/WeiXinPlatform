@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.shangtech.ssh.core.base.BaseController;
 import net.shangtech.weixin.property.entity.ProjectType;
+import net.shangtech.weixin.property.entity.SubProject;
 import net.shangtech.weixin.property.service.ProjectService;
 import net.shangtech.weixin.sys.entity.SysUser;
 
@@ -94,7 +95,13 @@ public class PropertyController extends BaseController {
 	
 	@RequestMapping("/project/form")
 	public String projectForm(){
-		
+		Integer id = getId();
+		SubProject project = new SubProject();
+		if(id != null){
+			project = projectService.find(id);
+		}else{
+			project.setType(getInt("type"));
+		}
 		return PATH + "/project-form";
 	}
 	

@@ -98,3 +98,5 @@ form.form-condensed .controls{margin-left:100px;}
 
 .accordion.no-padding .accordion-inner{padding:0px;}
 .center{text-align:center;}
+.filebtnadd,.filebtnremove{position:absolute;margin-left:0px !important;border-left:0px;}
+.multifile{margin-bottom:5px;position:relative;}

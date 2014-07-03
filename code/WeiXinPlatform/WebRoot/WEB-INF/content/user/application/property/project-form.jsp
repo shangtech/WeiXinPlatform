@@ -6,7 +6,8 @@
         <div class="controls">
         <div class="row-fluid">
           <input id="projectName" name="projectName" class="span9" type="text" placeholder="楼盘名称" />
-          <input type="hidden" name="id" id="id"/>
+          <input type="hidden" name="id" id="id" value="${project.id}"/>
+          <input type="hidden" name="type" id="type" value="${project.type}"/>
         </div>
         </div>
     </div>
@@ -109,5 +110,19 @@
           <textarea id="traffic" name="traffic" class="span9"></textarea>
         </div>
         </div>
+    </div>
+    <div class="control-group">
+        <label for="imageDescription" class="control-label">楼盘图片</label>
+	    <div class="controls uploader">
+	    	<div class="row-fluid multifile">
+			    <input type="file" id="image_1" class="span9" data-for="image_1"/>
+			    <input type="hidden" id="imageDescription_hidden" name="image" value="${project.image}"/>
+		 		<div class="input-append span9">
+			        <span class="span12 fileholder" id="fileholder-image_1">请选择文件</span>
+			        <span class="btn span2 filebtn action" id="filebtn-image_1">选择</span>
+			        <span class="btn span2 action filebtnadd">添加</span>
+		    	</div>
+	    	</div>
+     	</div>
     </div>
 </form>

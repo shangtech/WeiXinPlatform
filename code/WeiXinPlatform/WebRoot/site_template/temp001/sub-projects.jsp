@@ -28,7 +28,10 @@
         				</div>
         			</td>
         			<td>
-        				<div class="center"><a href="javascript:;" id="addProjectBtn" class="btn btn-primary btn-large">添加楼盘</a></div>
+        				<div class="center">
+        					
+        				</div>
+        				<div class="center"><a href="javascript:;" style="display: none;" id="addProjectBtn" class="btn btn-primary btn-large">添加楼盘</a></div>
         			</td>
         		</tr>
         	</tbody>
@@ -62,6 +65,10 @@
     	<h3>楼盘详情</h3>
   	</div>
   	<div class="modal-body"></div>
+  	<div class="modal-footer">
+	  	<a href="javascript:;" data-dismiss="modal" class="btn">取消</a>
+	  	<a href="javascript:;" class="btn btn-primary submit">保存</a>
+	</div>
 </div>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -117,6 +124,13 @@ $(document).ready(function(){
 		$('#typeName').val($(this).parent().parent().find('.name').html());
 		$('#typeFormModal').modal('toggle');
 	});
+	$('#menulist').on('click', '.menunode', function(){
+		if(!$(this).hasClass('on')){
+			$('#menulist .on').removeClass('on');
+			$(this).addClass('on');
+			$('#addProjectBtn').show();
+		}
+	});
 	$('#menulist').on('click', '.del', function(){
 		$.ajax({
 			url: '${ctx}/manage/application/property/type/delete.htm?id='+$(this).parent().parent().attr('data-id'),
@@ -132,7 +146,21 @@ $(document).ready(function(){
 	});
 	$('#addProjectBtn').click(function(){
 		$('#projectFormModal').modal('toggle');
-		$('#projectFormModal .modal-body').load('${ctx}/manage/application/property/project/form.htm');
+		$('#projectFormModal .modal-body').load('${ctx}/manage/application/property/project/form.htm?type='+$('#menulist .on').attr('data-id'));
+	});
+	$('#projectFormModal').on('click', '.filebtnadd', function(){
+		var id = new Date().getTime();
+		var html = '<div class="row-fluid multifile">'
+			     + '<input type="file" id="image_'+id+'" class="span9" data-for="image_'+id+'"/>'
+			     + '<input type="hidden" id="image_'+id+'_hidden" name="image" value=""/>'
+		 		 + '<div class="input-append span9">'
+			     +   '<span class="span12 fileholder" id="fileholder-image_'+id+'">请选择文件</span>'
+			     +   '<span class="btn span2 filebtn action" id="filebtn-image_'+id+'">选择</span>'
+			     +   '<span class="btn span2 action filebtnadd">添加</span>'
+		    	 + '</div>'
+	    		 + '</div>';
+	    $(this).parent().parent().parent().append(html);
+	    $(this).removeClass('filebtnadd').addClass('filebtnremove').html('移除');
 	});
 });
 </script>
