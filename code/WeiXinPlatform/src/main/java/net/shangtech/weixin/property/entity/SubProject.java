@@ -58,6 +58,9 @@ public class SubProject extends IBaseEntity {
 	@Column(name = "traffic")
 	private String traffic;//交通情况
 	
+	@Column(name = "IMAGE_TRAFFIC")
+	private String imageTraffic;//交通情况页面封面图
+	
 	@Column(name = "price_avg")
 	private String priceAvg;//楼盘均价
 	
@@ -182,6 +185,14 @@ public class SubProject extends IBaseEntity {
 
 	public void setType(Integer type) {
 		this.type = type;
+	}
+
+	public String getImageTraffic() {
+		return imageTraffic;
+	}
+
+	public void setImageTraffic(String imageTraffic) {
+		this.imageTraffic = imageTraffic;
 	}
 	
 }

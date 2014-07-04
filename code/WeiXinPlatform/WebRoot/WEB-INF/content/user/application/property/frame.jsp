@@ -31,7 +31,7 @@
     	<jsp:param value="projects" name="current"/>
     </jsp:include>
     <div class="span9">
-      <jsp:include page="/site_template/temp001/sub-projects.jsp"></jsp:include>
+      <jsp:include page="/site_template/temp001/admin/sub-projects.jsp"></jsp:include>
     </div>
   </div>
 </div><script type="text/javascript">
