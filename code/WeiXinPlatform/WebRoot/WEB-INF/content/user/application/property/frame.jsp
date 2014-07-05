@@ -4,6 +4,7 @@
 <html>
   <head>
   	<jsp:include page="/WEB-INF/content/user/common/resources.jsp"></jsp:include>
+  	<link href="${ctx}/components/kindeditor/themes/default/default.css"/>
   	<title>仪表盘</title>
   </head>
   <body>
@@ -28,7 +29,7 @@
 <div class="container">
   <div class="row">
     <jsp:include page="/WEB-INF/content/user/common/menu-application.jsp">
-    	<jsp:param value="projects" name="current"/>
+    	<jsp:param value="property" name="current"/>
     </jsp:include>
     <div class="span9">
       <jsp:include page="/site_template/temp001/admin/sub-projects.jsp"></jsp:include>

@@ -17,6 +17,7 @@
 
 	<!-- 自动扫描的包名 -->
 	<context:component-scan base-package="net.shangtech.weixin.*.controller"/>
+	<context:component-scan base-package="net.shangtech.weixin.controller"/>
 
 	<bean id="handlerMapping" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
 
@@ -33,10 +34,16 @@
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
 	</bean>
 	<bean id="userInterceptor" class="net.shangtech.weixin.sys.interceptor.UserInterceptor"/>
+	<bean id="weixinInterceptor" class="net.shangtech.weixin.sys.interceptor.WeixinInterceptor"/>
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/manage/**"/>
 			<bean class="net.shangtech.weixin.sys.interceptor.UserInterceptor"/>
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/weixin/**"/>
+			<bean class="net.shangtech.weixin.sys.interceptor.WeixinInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
 	<!--

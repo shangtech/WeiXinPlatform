@@ -8,6 +8,11 @@ import net.shangtech.weixin.sys.entity.SysUser;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * 这个是后台管理的拦截器,判断用户是否登录
+ * @author songxh
+ * @createtime 2014-7-5下午09:13:24
+ */
 public class UserInterceptor implements HandlerInterceptor {
 
 	@Override

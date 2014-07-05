@@ -66,6 +66,9 @@ public class SubProject extends IBaseEntity {
 	
 	@Column(name = "project_type")
 	private Integer type;//楼盘分类
+	
+	@Column(name = "custom1")
+	private String custom1;
 
 	public Integer getSysUserId() {
 		return sysUserId;
@@ -193,6 +196,14 @@ public class SubProject extends IBaseEntity {
 
 	public void setImageTraffic(String imageTraffic) {
 		this.imageTraffic = imageTraffic;
+	}
+
+	public String getCustom1() {
+		return custom1;
+	}
+
+	public void setCustom1(String custom1) {
+		this.custom1 = custom1;
 	}
 	
 }

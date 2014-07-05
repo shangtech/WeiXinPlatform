@@ -11,10 +11,8 @@ import net.shangtech.ssh.core.base.IBaseEntity;
 @Entity
 @Table(name = "sys_user")
 public class SysUser extends IBaseEntity {
+
 	private static final long serialVersionUID = 1L;
-	
-	@Column(name = "user_type")
-	private Integer userType;
 	
 	@Column(name = "username")
 	private String username;
@@ -41,13 +39,13 @@ public class SysUser extends IBaseEntity {
 	private String wxNumber;
 	
 	@Column(name = "token")
-	private String token;
+	private String token;//token也用来作为用户的唯一标识,使用用户ID生成MD5就作为token
 	
 	@Column(name = "appid")
-	private String appId;
+	private String appid;
 	
 	@Column(name = "appkey")
-	private String appKey;
+	private String appkey;
 	
 	@Column(name = "province")
 	private String province;
@@ -58,8 +56,11 @@ public class SysUser extends IBaseEntity {
 	@Column(name = "description")
 	private String description;
 	
-	@Column(name = "openid")
+	@Column(name = "penid")
 	private String openid;
+	
+	@Column(name = "user_type")
+	private Integer userType;
 
 	public String getUsername() {
 		return username;
@@ -133,20 +134,20 @@ public class SysUser extends IBaseEntity {
 		this.token = token;
 	}
 
-	public String getAppId() {
-		return appId;
+	public String getAppid() {
+		return appid;
 	}
 
-	public void setAppId(String appId) {
-		this.appId = appId;
+	public void setAppid(String appid) {
+		this.appid = appid;
 	}
 
-	public String getAppKey() {
-		return appKey;
+	public String getAppkey() {
+		return appkey;
 	}
 
-	public void setAppKey(String appKey) {
-		this.appKey = appKey;
+	public void setAppkey(String appkey) {
+		this.appkey = appkey;
 	}
 
 	public String getProvince() {
@@ -188,5 +189,5 @@ public class SysUser extends IBaseEntity {
 	public void setUserType(Integer userType) {
 		this.userType = userType;
 	}
-	
+
 }

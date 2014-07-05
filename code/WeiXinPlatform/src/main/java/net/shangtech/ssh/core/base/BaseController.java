@@ -29,7 +29,10 @@ public class BaseController extends BaseMVC {
 	}
 	
 	protected SysUser getUser(){
-		SysUser user = (SysUser) request.getSession().getAttribute("user");
+		//微信客户端请求的user保存在request中,后台操作请求保存在session中
+		SysUser user = (SysUser) request.getAttribute("sysUser");
+		if(user == null)
+			user = (SysUser) request.getSession().getAttribute("user");
 		return user;
 	}
 

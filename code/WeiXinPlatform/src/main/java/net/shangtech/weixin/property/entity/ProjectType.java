@@ -20,6 +20,9 @@ public class ProjectType extends IBaseEntity {
 	@Column(name = "type_name")
 	private String name;
 	
+	@Column(name = "name_en")
+	private String nameEn;
+	
 	@Column(name = "sys_user_id")
 	private Integer sysUserId;
 	
@@ -48,6 +51,14 @@ public class ProjectType extends IBaseEntity {
 
 	public void setSort(Integer sort) {
 		this.sort = sort;
+	}
+
+	public String getNameEn() {
+		return nameEn;
+	}
+
+	public void setNameEn(String nameEn) {
+		this.nameEn = nameEn;
 	}
 	
 }
