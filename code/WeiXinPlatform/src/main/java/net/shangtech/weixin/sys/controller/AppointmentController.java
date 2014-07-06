@@ -1,5 +1,8 @@
 package net.shangtech.weixin.sys.controller;
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.shangtech.ssh.core.base.BaseController;
 import net.shangtech.ssh.core.base.Page;
+import net.shangtech.ssh.core.util.DateUtils;
+import net.shangtech.ssh.core.util.FileUtils;
 import net.shangtech.weixin.appointment.entity.Appointment;
 import net.shangtech.weixin.appointment.service.AppointmentService;
 import net.shangtech.weixin.site.entity.SiteTemplate;
@@ -14,10 +19,13 @@ import net.shangtech.weixin.site.service.SiteTemplateService;
 import net.shangtech.weixin.sys.entity.SysUser;
 import net.shangtech.weixin.type.SiteTemplateType;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 /**
  * 预约相关操作
@@ -60,16 +68,26 @@ public class AppointmentController extends BaseController {
 	 */
 	@RequestMapping("/save")
 	public String saveAppointment(HttpServletResponse response, Appointment appointment){
-		
-		return null;
+		this.response = response;
+		SysUser user = getUser();
+		String startTimeStr = request.getParameter("start_time");
+		String endTimeStr = request.getParameter("end_time");
+		appointment.setStartTime(DateUtils.parse(startTimeStr+":00"));
+		appointment.setEndTime(DateUtils.parse(endTimeStr+":00"));
+		appointment.setCreateTime(new Date());
+		appointment.setSysUserId(user.getId());
+		service.add(appointment);
+		return success();
 	}
 	
 	@RequestMapping("/delete")
 	public String deleteAppointment(HttpServletResponse response){
-		
-		return null;
+		this.response = response;
+		Integer id = getId();
+		service.delete(id);
+		return success();
 	}
-	
+	private static List<String> ALLOW_TYPES = Arrays.asList(".jpg", ".jpeg", ".png");
 	/**
 	 * AJAX保存图片,返回保存后的路径
 	 * @author songxh
@@ -80,8 +98,31 @@ public class AppointmentController extends BaseController {
 	 */
 	@RequestMapping("/image/save")
 	public String saveImage(HttpServletRequest request, HttpServletResponse response){
-		
-		return null;
+		this.response = response;
+		MultipartFile file = null;
+		try{
+			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+			file = multipartRequest.getFile("image");
+			if(file == null){
+				return failed("文件上传失败");
+			}
+			String name = file.getOriginalFilename();
+			if(StringUtils.isBlank(name) || !name.contains(".")){
+				return failed("文件格式错误");
+			}
+			String extend = name.substring(name.lastIndexOf("."));
+			if(!ALLOW_TYPES.contains(extend)){
+				return failed("不支持的文件格式");
+			}
+			String path = FileUtils.saveStreamToFile(file.getInputStream(), file.getOriginalFilename());
+			return success(path);
+		}catch(ClassCastException e){
+			e.printStackTrace();
+			return failed("保存文件失败");
+		}catch(IOException e){
+			e.printStackTrace();
+			return failed("保存文件失败");
+		}
 	}
 	
 	/**

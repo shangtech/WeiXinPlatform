@@ -28,11 +28,11 @@
 <div class="container">
   <div class="row">
     <jsp:include page="/WEB-INF/content/user/common/menu-application.jsp">
-    	<jsp:param value="appointment" name="current"/>
+    	<jsp:param value="newstype" name="current"/>
     </jsp:include>
     <div class="span9">
     	<div class="pull-right">
-	      <a href="form.htm" class="btn">添加预约活动</a>
+	      <a href="javascript:;" data-toggle="modal" class="btn addType">添加分类</a>
       	</div>
       <h4 class="header">预约活动列表</h4>
       <div id="d3" style="width: 100%; margin-top: -30px"></div><br />
@@ -40,18 +40,17 @@
        		<table class="table table-bordered table-hover" id="list">
        			<thead>
        				<tr>
-       					<th>标题</th><th>开始时间</th><th>结束时间</th><th>添加时间</th><th>操作</th>
+       					<th width="130">分类名称</th><th>链接地址</th><th width="150">操作</th>
        				</tr>
        			</thead>
        			<tbody>
        				<c:forEach items="${page.result}" var="item">
        				<tr data-id="${item.id}">
-       					<td>${item.title}</td>
-       					<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${item.startTime}"/></td>
-       					<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${item.endTime}"/></td>
-       					<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${item.createTime}"/></td>
+       					<td>${item.name}</td>
+       					<td>${item.url}</td>
        					<td class="btngroup tc">
        						<div class="btn-group">
+       							<a href="javascript:;" class="btn edit">编辑</a>
        							<a href="javascript:;" class="btn remove">删除</a>
        						</div>
        					</td>
@@ -61,6 +60,19 @@
        		</table>
       </div>
     </div>
+  </div>
+</div>
+<div id="typeFormModal" class="modal hide fade" data-backdrop="static">
+  <div class="modal-header">
+    <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+    <h3>新建菜单</h3>
+  </div>
+  <div class="modal-body">
+    
+  </div>
+  <div class="modal-footer">
+  	<a href="#" data-dismiss="modal" class="btn">取消</a>
+  	<a href="#" class="btn btn-primary submit">保存</a>
   </div>
 </div>
 <script type="text/javascript">

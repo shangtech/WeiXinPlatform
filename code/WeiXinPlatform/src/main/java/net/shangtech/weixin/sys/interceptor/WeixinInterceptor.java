@@ -41,6 +41,7 @@ public class WeixinInterceptor implements HandlerInterceptor {
 		//SysUser user = sysUserService.findByToken(token);
 		SysUser user = new SysUser();
 		user.setId(0);
+		sysUserService.find(0);
 		request.setAttribute("sysUser", user);
 		return true;
 	}

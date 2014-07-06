@@ -64,19 +64,37 @@
         		</div>
         	</div>
         	<div class="control-group">
+        		<label for="title" class="control-label">活动封面图</label>
+        		<div class="controls uploader">
+        			<input type="file" id="image" class="span9 auto-upload" data-for="image"/>
+        			<input type="hidden" id="image_hidden" name="image"/>
+        			<div class="input-append span9">
+        				<span class="span12 fileholder" id="fileholder-image">请选择文件</span>
+        				<span class="btn span2 filebtn action" id="filebtn-image">选择</span>
+        			</div>
+        		</div>
+        	</div>
+        	<div class="control-group">
         		<label for="title" class="control-label">开始时间</label>
         		<div class="controls">
-        			<input type="text" id="startTime" name="startTime" class="span4 form_datetime"/>
+        			<input type="text" id="startTime" name="start_time" class="span4 form_datetime"/>
         		</div>
         	</div>
         	<div class="control-group">
         		<label for="title" class="control-label">结束时间</label>
         		<div class="controls">
-        			<input type="text" id="endTime" name="endTime" class="span4 form_datetime"/>
+        			<input type="text" id="endTime" name="end_time" class="span4 form_datetime"/>
         		</div>
         	</div>
-        	<div id="custom">
+        	<div id="custom"></div>
+        	<div class="control-group">
+        		<div class="controls">
+        			<a href="javascript:;" class="btn submit">保存</a>
+        		</div>
         	</div>
+      	</form>
+      	<form action="image/save.htm" enctype="multipart/form-data" method="post" style="display:none;" id="imageForm">
+      		<input type="file" name="image"/>
       	</form>
       </div>
     </div>

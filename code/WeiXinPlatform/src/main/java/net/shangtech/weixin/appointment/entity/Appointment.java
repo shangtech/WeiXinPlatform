@@ -56,6 +56,9 @@ public class Appointment extends IBaseEntity {
 	@Column(name = "title")
 	private String title;
 
+	@Column(name = "image")
+	private String image;//活动封面图
+	
 	public Integer getSysUserId() {
 		return sysUserId;
 	}
@@ -166,6 +169,14 @@ public class Appointment extends IBaseEntity {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 	
 }

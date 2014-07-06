@@ -32,33 +32,30 @@
     </jsp:include>
     <div class="span9">
     	<div class="pull-right">
-	      <a href="form.htm" class="btn">添加预约活动</a>
+	      <a href="form.htm" class="btn">添加新闻资讯</a>
       	</div>
-      <h4 class="header">预约活动列表</h4>
+      <h4 class="header">新闻资讯列表</h4>
       <div id="d3" style="width: 100%; margin-top: -30px"></div><br />
       <div>
-       		<table class="table table-bordered table-hover" id="list">
-       			<thead>
-       				<tr>
-       					<th>标题</th><th>开始时间</th><th>结束时间</th><th>添加时间</th><th>操作</th>
-       				</tr>
-       			</thead>
-       			<tbody>
-       				<c:forEach items="${page.result}" var="item">
-       				<tr data-id="${item.id}">
-       					<td>${item.title}</td>
-       					<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${item.startTime}"/></td>
-       					<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${item.endTime}"/></td>
-       					<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${item.createTime}"/></td>
-       					<td class="btngroup tc">
-       						<div class="btn-group">
-       							<a href="javascript:;" class="btn remove">删除</a>
-       						</div>
-       					</td>
-       				</tr>
-       				</c:forEach>
-       			</tbody>
-       		</table>
+       		<form class="form-horizontal" method="post" action="wxmenu/save.htm"/>
+		      <div class="control-group">
+		        <label for="type" class="control-label">资讯分类</label>
+		        <div class="controls">
+		          <select name="type">
+		          	<c:forEach items="${typeList}" var="item">
+		          		<option value="${item.id}"<c:if test="${news.type eq item.id}"> selected</c:if>>${item.name}</option>
+		          	</c:forEach>
+		          </select>
+		        </div>
+		      </div>
+		      <div class="control-group">
+		        <label for="title" class="control-label">标题</label>
+		        <div class="controls">
+		          <input id="title" name="title" type="text" placeholder="标题" />
+		          <input name="id" type="hidden" value="${news.id}"/>
+		        </div>
+		      </div>
+		    </form>
       </div>
     </div>
   </div>
