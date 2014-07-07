@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/content/common/taglibs.jsp"%>
-	<form id="typeForm" class="form-horizontal" method="post" action="save.htm"/>
+	<form id="typeForm" class="form-horizontal" method="post" action="save.htm">
       <div class="control-group">
         <label for="name" class="control-label">分类名称 </label>
         <div class="controls">

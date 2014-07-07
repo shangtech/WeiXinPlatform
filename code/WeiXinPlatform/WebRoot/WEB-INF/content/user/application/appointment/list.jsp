@@ -21,7 +21,7 @@
       </div>
     </div>
     <jsp:include page="/WEB-INF/content/user/common/menu.jsp">
-    	<jsp:param value="service" name="current"/>
+    	<jsp:param value="application" name="current"/>
     </jsp:include>
     <div class="page">
       <div class="page-container">

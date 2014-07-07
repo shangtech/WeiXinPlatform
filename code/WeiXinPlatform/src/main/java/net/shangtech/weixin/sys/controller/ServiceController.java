@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.shangtech.ssh.core.base.BaseController;
 import net.shangtech.ssh.core.base.Page;
 import net.shangtech.ssh.core.util.FileUtils;
+import net.shangtech.weixin.Config;
+import net.shangtech.weixin.HttpUtil;
 import net.shangtech.weixin.sys.entity.SysUser;
 import net.shangtech.weixin.weixin.entity.WxMenu;
 import net.shangtech.weixin.weixin.entity.WxMessage;
@@ -20,6 +22,10 @@ import net.shangtech.weixin.weixin.service.WxMenuService;
 import net.shangtech.weixin.weixin.service.WxMessageService;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +33,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 /**
@@ -50,7 +58,8 @@ public class ServiceController extends BaseController {
 	 */
 	@RequestMapping("/wxmenu")
 	public String wxmenu(){
-		List<WxMenu> list = menuService.findBySysUser(0);
+		SysUser user = getUser();
+		List<WxMenu> list = menuService.findBySysUser(user.getId());
 		request.setAttribute("list", list);
 		return "user/service/menu";
 	}
@@ -67,6 +76,7 @@ public class ServiceController extends BaseController {
 		WxMenu menu = new WxMenu();
 		String menuName = request.getParameter("menuName");
 		String parentId = request.getParameter("parentId");
+		String menuUrl = request.getParameter("menuUrl");
 		if(StringUtils.isBlank(parentId)){
 			parentId = "0";
 		}
@@ -79,9 +89,11 @@ public class ServiceController extends BaseController {
 				return failed("无权限");
 			}
 			menu.setMenuName(menuName);
+			menu.setMenuUrl(menuUrl);
 			menuService.update(menu);
 		}else{
 			menu.setMenuName(menuName);
+			menu.setMenuUrl(menuUrl);
 			int parent = Integer.parseInt(parentId);
 			WxMenu parentMenu = menuService.find(parent);
 			if(parentMenu == null){
@@ -106,6 +118,7 @@ public class ServiceController extends BaseController {
 		obj.put("success", true);
 		obj.put("parentId", menu.getParentId());
 		obj.put("menuName", menu.getMenuName());
+		obj.put("menuUrl", menu.getMenuUrl());
 		obj.put("id", menu.getId());
 		out(obj.toJSONString());
 		return null;
@@ -140,6 +153,78 @@ public class ServiceController extends BaseController {
 		}
 		menuService.delete(id);
 		return success(String.valueOf(id));
+	}
+	
+	@RequestMapping("/wxmenu/sync")
+	public String syncMenu(HttpServletResponse response){
+		this.response = response;
+		SysUser user = getUser();
+		JSONArray array = new JSONArray();
+		List<WxMenu> list = menuService.findBySysUser(user.getId());
+		for(WxMenu menu : list){
+			JSONObject obj = new JSONObject();
+			obj.put("name", menu.getMenuName());
+			List<WxMenu> children = menu.getChildren();
+			JSONArray subs = new JSONArray();
+			//如果有二级菜单就不用判断类型
+			for(WxMenu child : children){
+				JSONObject sub = new JSONObject();
+				sub.put("name", child.getMenuName());
+				sub.put("type", "view");
+				sub.put("url", child.getMenuUrl());
+//				if(MenuType.CLICK.getType().equals(child.getMenuType())){
+//					sub.put("type", child.getMenuType());
+//					sub.put("key", child.getMenuKey());
+//				}else if(MenuType.VIEW.getType().equals(child.getMenuType())){
+//					sub.put("type", child.getMenuType());
+//					sub.put("url", child.getMenuUrl());
+//				}else{
+//					continue;
+//				}
+				subs.add(sub);
+			}
+			if(!subs.isEmpty()){
+				obj.put("sub_button", subs);
+				array.add(obj);
+				continue;
+			}
+			obj.put("type", "view");
+			obj.put("url", menu.getMenuUrl());
+//			if(MenuType.CLICK.getType().equals(menu.getMenuType())){
+//				obj.put("type", menu.getMenuType());
+//				obj.put("key", menu.getMenuKey());
+//			}else if(MenuType.VIEW.getType().equals(menu.getMenuType())){
+//				obj.put("type", menu.getMenuType());
+//				obj.put("url", menu.getMenuUrl());
+//			}else{
+//				continue;
+//			}
+			array.add(obj);
+		}
+		JSONObject result = new JSONObject();
+		result.put("button", array);
+		HttpClient client = HttpUtil.createSSLInsecureClient();
+		String accessToken = HttpUtil.getAccessToken(client, user);
+		if(accessToken == null){
+			return failed("同步发生异常,请联系系统管理员");
+		}
+		HttpPost post = new HttpPost(Config.URL_POST_MENU_CREATE + "access_token=" + accessToken);
+		HttpEntity entity = new StringEntity(result.toJSONString(), "UTF-8");
+		post.setEntity(entity);
+		try {
+			String resp = HttpUtil.post(client, post);
+			if(StringUtils.isBlank(resp)){
+				return failed("同步失败");
+			}
+			JSONObject json = JSON.parseObject(resp);
+			if("0".equals(json.getString("errcode"))){
+				return success("同步成功");
+			}
+			return failed("同步失败");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return failed("同步发生异常,请联系系统管理员");
+		}
 	}
 	
 	/**

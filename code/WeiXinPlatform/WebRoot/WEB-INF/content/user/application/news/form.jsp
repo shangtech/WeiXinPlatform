@@ -4,6 +4,7 @@
 <html>
   <head>
   	<jsp:include page="/WEB-INF/content/user/common/resources.jsp"></jsp:include>
+  	<link href="${ctx}/components/kindeditor/themes/default/default.css"/>
   	<title>仪表盘</title>
   </head>
   <body>
@@ -21,23 +22,23 @@
       </div>
     </div>
     <jsp:include page="/WEB-INF/content/user/common/menu.jsp">
-    	<jsp:param value="service" name="current"/>
+    	<jsp:param value="application" name="current"/>
     </jsp:include>
     <div class="page">
       <div class="page-container">
 <div class="container">
   <div class="row">
     <jsp:include page="/WEB-INF/content/user/common/menu-application.jsp">
-    	<jsp:param value="appointment" name="current"/>
+    	<jsp:param value="news" name="current"/>
     </jsp:include>
     <div class="span9">
     	<div class="pull-right">
-	      <a href="form.htm" class="btn">添加新闻资讯</a>
+	      <a href="javascript:history.go(-1);" class="btn">返回</a>
       	</div>
-      <h4 class="header">新闻资讯列表</h4>
+      <h4 class="header">新闻资讯</h4>
       <div id="d3" style="width: 100%; margin-top: -30px"></div><br />
-      <div>
-       		<form class="form-horizontal" method="post" action="wxmenu/save.htm"/>
+      <div class="row-fluid">
+       		<form id="newsForm" class="form-horizontal" method="post" action="save.htm" enctype="multipart/form-data"/>
 		      <div class="control-group">
 		        <label for="type" class="control-label">资讯分类</label>
 		        <div class="controls">
@@ -51,30 +52,73 @@
 		      <div class="control-group">
 		        <label for="title" class="control-label">标题</label>
 		        <div class="controls">
-		          <input id="title" name="title" type="text" placeholder="标题" />
+		          <input id="title" name="title" class="span9" type="text" placeholder="标题" value="${news.title}"/>
 		          <input name="id" type="hidden" value="${news.id}"/>
 		        </div>
+		      </div>
+		      <div class="control-group">
+		        <label for="image" class="control-label">封面图</label>
+			    <div class="controls uploader">
+			    	<div class="row-fluid">
+				    <input type="file" id="image" name="image_file" class="span9" data-for="image"/>
+			 		<div class="input-append span9">
+				        <span class="span12 fileholder" id="fileholder-image">请选择文件</span>
+				        <span class="btn span2 filebtn action" id="filebtn-image">选择</span>
+			    	</div>
+			    	</div>
+		     	</div>
+		      </div>
+		      <div class="control-group">
+		    	<div class="controls">
+		    		<label class="checkbox"><input <c:if test="${news.isPublish}">checked</c:if> name="isPublish" id="isPublish" type="checkbox"> 是否发布</label>
+		    	</div>
+		      </div>
+		      <div class="control-group">
+		        <label for="sort" class="control-label">排序</label>
+		        <div class="controls">
+		          <input id="sort" name="sort" type="text" placeholder="排序" value="${news.sort}"/>
+		        </div>
+		      </div>
+		      <div class="control-group">
+		        <label for="content" class="control-label">正文</label>
+		        <div class="controls">
+		          <textarea rows="5" id="content" name="content">${news.content}</textarea>
+		        </div>
+		      </div>
+		      <div class="control-group">
+		      	<div class="controls">
+		      		<a class="btn submit" href="javascript:;">保存</a>
+		      	</div>
 		      </div>
 		    </form>
       </div>
     </div>
   </div>
 </div>
+<script type="text/javascript" src="${ctx}/components/bootstrap.singlefile.js"></script>
+<script type="text/javascript" src="${ctx}/components/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript" src="${ctx}/components/kindeditor/lang/zh_CN.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-	$('#list .remove').click(function(){
-		var id = $(this).parent().parent().parent().attr('data-id');
-		$.ajax({
-			url: 'delete.htm?id='+id,
+	$('#newsForm .submit').click(function(){
+		editor.sync();
+		$('#newsForm').ajaxSubmit({
 			dataType: 'json',
 			success: function(result){
 				if(!result.success){
 					alert(result.msg);
 					return;
 				}
-				document.location.reload();
+				document.location.href = 'list.htm';
 			}
 		});
+	});
+});
+var editor;
+KindEditor.ready(function(K){
+	editor = K.create('#content', {
+		width:666,
+		height:400
 	});
 });
 </script>

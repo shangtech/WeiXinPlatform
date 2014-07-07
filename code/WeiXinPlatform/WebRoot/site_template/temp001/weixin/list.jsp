@@ -9,7 +9,7 @@
 	<meta name="format-detection" content="telephone=no">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<script type="text/javascript" src="${ctx}/components/user/js/jquery.min.js"></script>
-		<script type="text/javascript" src="${ctx}/components/bootstrap3/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="${ctx}/components/bootstrap3/js/bootstrap.min.js"></script>
 	<script type='application/javascript' src='${ctx}/site_template/temp001/js/fastclick.js'></script>
 	<script type="text/javascript">
 	 //请选引用jquery

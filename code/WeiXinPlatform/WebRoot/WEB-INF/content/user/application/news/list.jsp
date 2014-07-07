@@ -21,37 +21,41 @@
       </div>
     </div>
     <jsp:include page="/WEB-INF/content/user/common/menu.jsp">
-    	<jsp:param value="service" name="current"/>
+    	<jsp:param value="application" name="current"/>
     </jsp:include>
     <div class="page">
       <div class="page-container">
 <div class="container">
   <div class="row">
     <jsp:include page="/WEB-INF/content/user/common/menu-application.jsp">
-    	<jsp:param value="appointment" name="current"/>
+    	<jsp:param value="news" name="current"/>
     </jsp:include>
     <div class="span9">
     	<div class="pull-right">
-	      <a href="form.htm" class="btn">添加预约活动</a>
+	      <a href="form.htm" class="btn">添加新闻资讯</a>
       	</div>
-      <h4 class="header">预约活动列表</h4>
+      <h4 class="header">新闻资讯列表</h4>
       <div id="d3" style="width: 100%; margin-top: -30px"></div><br />
       <div>
        		<table class="table table-bordered table-hover" id="list">
        			<thead>
        				<tr>
-       					<th>标题</th><th>开始时间</th><th>结束时间</th><th>添加时间</th><th>操作</th>
+       					<th>标题</th><th>分类</th><th>是否发布</th><th>添加时间</th><th width="150">操作</th>
        				</tr>
        			</thead>
        			<tbody>
-       				<c:forEach items="${page.result}" var="item">
+       				<c:forEach items="${list}" var="item">
        				<tr data-id="${item.id}">
        					<td>${item.title}</td>
-       					<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${item.startTime}"/></td>
-       					<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${item.endTime}"/></td>
+       					<td>${item.newsType.name}</td>
+       					<td>
+       						<c:if test="${item.isPublish}">已发布</c:if>
+       						<c:if test="${not item.isPublish}">未发布</c:if>
+       					</td>
        					<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${item.createTime}"/></td>
        					<td class="btngroup tc">
        						<div class="btn-group">
+       							<a href="form.htm?id=${item.id}" class="btn edit">编辑</a>
        							<a href="javascript:;" class="btn remove">删除</a>
        						</div>
        					</td>

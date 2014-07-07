@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @createtime 2014-7-5下午09:13:24
  */
 public class UserInterceptor implements HandlerInterceptor {
-
+	
 	@Override
 	public void afterCompletion(HttpServletRequest arg0,
 			HttpServletResponse arg1, Object arg2, Exception arg3)
@@ -31,11 +31,14 @@ public class UserInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
 			Object handler) throws Exception {
+		String uri = request.getRequestURI();
+		if(uri.endsWith("prelogin.htm") || uri.endsWith("login.htm")){
+			return true;
+		}
 		SysUser user = (SysUser) request.getSession().getAttribute("user");
 		if(user == null){
-			user = new SysUser();
-			user.setId(0);
-			request.getSession().setAttribute("user", user);
+			response.sendRedirect(request.getContextPath()+"/manage/prelogin.htm");
+			return false;
 		}
 		return true;
 	}

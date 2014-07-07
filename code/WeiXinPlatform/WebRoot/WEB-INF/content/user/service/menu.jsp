@@ -55,6 +55,7 @@
         					<div class="level-first">
         						<div data-id="${item.id}" class="menunode" id="menunode-${item.id}" data-parent="0">
         							<a href="#"><span class="menuname">${item.menuName}</span></a>
+        							<input type="hidden" id="menu_url_${item.id}" value="${item.menuUrl}"/>
         							<div class="btns">
         								<a href="#" class="add"><i class="icon-plus"></i></a>
 	        							<a href="#" class="edit"><i class="icon-pencil"></i></a>
@@ -66,6 +67,7 @@
         							<c:forEach items="${item.children}" var="child">
         							<div data-id="${child.id}" class="menunode" id="menunode-${child.id}" data-parent="${item.id}">
 	        							<a href="#"><span class="placeholder"></span><span class="menuname">${child.menuName}</span></a>
+	        							<input type="hidden" id="menu_url_${child.id}" value="${child.menuUrl}"/>
 	        							<div class="btns">
 		        							<a href="#" class="edit"><i class="icon-pencil"></i></a>
 		        							<a href="#" class="del"><i class="icon-trash"></i></a>
@@ -159,6 +161,12 @@
           <input type="hidden" name="parentId" value="0" id="parentId"/>
           <input type="hidden" name="id" id="id"/>
         </div>
+      </div>
+      <div class="control-group">
+      	<label for="menuUrl" class="control-label">链接地址</label>
+      	<div class="controls">
+      		<input type="text" id="menuUrl" name="menuUrl" type="text" placeholder="http://"/>
+      	</div>
       </div>
     </form>
   </div>

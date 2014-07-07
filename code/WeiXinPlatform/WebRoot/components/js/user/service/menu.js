@@ -42,10 +42,12 @@ $(document).ready(function(){
 					var old = $('#menunode-'+result.id);
 					if(old.length > 0){
 						old.find('.menuname')[0].innerHTML = result.menuName;
+						$('#menu_url_'+result.id).val(result.menuUrl);
 						return;
 					}
 					var menunode = $('<div></div>').attr('data-id', result.id).addClass('menunode');
 					var menunodeHtml = '<a href="#">'+(result.parentId==0?'':'<span class="placeholder"></span>')+'<span class="menuname">'+result.menuName+'</span></a>';
+					menunodeHtml += 		'<input type="hidden" id="menu_url_'+result.id+'" value="'+result.menuUrl+'"/>';
 					menunodeHtml +=			'<div class="btns">';
 					//如果是一级菜单要加添加按钮
 					if(result.parentId == 0)
@@ -99,6 +101,7 @@ $(document).ready(function(){
 		$('#parentId').val(node.attr('data-parent'));
 		$('#id').val(node.attr('data-id'));
 		$('#menuName').val(node.find('.menuname')[0].innerHTML);
+		$('#menuUrl').val($('#menu_url_'+node.attr('data-id')).val());
 		$('#menuFormModal').modal('toggle');
 	});
 	$('#menulist').on('click', '.add', function(){

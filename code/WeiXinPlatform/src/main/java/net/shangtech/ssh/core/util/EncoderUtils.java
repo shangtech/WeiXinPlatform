@@ -34,9 +34,7 @@ public class EncoderUtils {
 		return sb.toString();
 	}
 	public static void main(String[] args){
-		System.out.println("admin_songxh=" + EncoderUtils.MD5(EncoderUtils.MD5("admin_songxh@meiya@2014")));
-		System.out.println("for_marketing="+EncoderUtils.MD5(EncoderUtils.MD5("for_marketing@meiya@2014")));
-		System.out.println("for_support="+EncoderUtils.MD5(EncoderUtils.MD5("for_support@meiya@2014")));
+		System.out.println("1=" + EncoderUtils.MD5(EncoderUtils.MD5("1")));
 		System.out.println(EncoderUtils.SHA1("songxh"));
 	}
 }

@@ -21,7 +21,7 @@
       </div>
     </div>
     <jsp:include page="/WEB-INF/content/user/common/menu.jsp">
-    	<jsp:param value="service" name="current"/>
+    	<jsp:param value="application" name="current"/>
     </jsp:include>
     <div class="page">
       <div class="page-container">
@@ -32,7 +32,7 @@
     </jsp:include>
     <div class="span9">
     	<div class="pull-right">
-	      <a href="javascript:;" data-toggle="modal" class="btn addType">添加分类</a>
+	      <a href="javascript:;" id="addBtn" data-toggle="modal" class="btn">添加分类</a>
       	</div>
       <h4 class="header">预约活动列表</h4>
       <div id="d3" style="width: 100%; margin-top: -30px"></div><br />
@@ -44,10 +44,10 @@
        				</tr>
        			</thead>
        			<tbody>
-       				<c:forEach items="${page.result}" var="item">
+       				<c:forEach items="${list}" var="item">
        				<tr data-id="${item.id}">
        					<td>${item.name}</td>
-       					<td>${item.url}</td>
+       					<td>http://localhost:8080/weixin/weixin/application/news/list.htm?type=${item.id}</td>
        					<td class="btngroup tc">
        						<div class="btn-group">
        							<a href="javascript:;" class="btn edit">编辑</a>
@@ -67,12 +67,12 @@
     <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
     <h3>新建菜单</h3>
   </div>
-  <div class="modal-body">
+  <div class="modal-body" id="typeFormBody">
     
   </div>
   <div class="modal-footer">
   	<a href="#" data-dismiss="modal" class="btn">取消</a>
-  	<a href="#" class="btn btn-primary submit">保存</a>
+  	<a href="javascript:;" class="btn btn-primary submit">保存</a>
   </div>
 </div>
 <script type="text/javascript">
@@ -81,6 +81,27 @@ $(document).ready(function(){
 		var id = $(this).parent().parent().parent().attr('data-id');
 		$.ajax({
 			url: 'delete.htm?id='+id,
+			dataType: 'json',
+			success: function(result){
+				if(!result.success){
+					alert(result.msg);
+					return;
+				}
+				document.location.reload();
+			}
+		});
+	});
+	$('#list .edit').click(function(){
+		var id = $(this).parent().parent().parent().attr('data-id');
+		$('#typeFormBody').load('form.htm?id='+id+'&_='+new Date().getTime());
+		$('#typeFormModal').modal('toggle');
+	});
+	$('#addBtn').click(function(){
+		$('#typeFormBody').load('form.htm?_='+new Date().getTime());
+		$('#typeFormModal').modal('toggle');
+	});
+	$('#typeFormModal .submit').click(function(){
+		$('#typeForm').ajaxSubmit({
 			dataType: 'json',
 			success: function(result){
 				if(!result.success){

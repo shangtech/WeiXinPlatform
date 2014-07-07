@@ -25,6 +25,10 @@ public class SysUserService extends BaseService<SysUser> {
 		return dao.findUnique("where openid=?", openid);
 	}
 	
+	public SysUser findByAppid(String appid){
+		return dao.findUnique("where appid=?", appid);
+	}
+	
 	/**
 	 * 根据token查找用户
 	 * @author songxh
@@ -34,6 +38,21 @@ public class SysUserService extends BaseService<SysUser> {
 	 */
 	public SysUser findByToken(String token){
 		return dao.findUnique("where token=?", token);
+	}
+	
+	public SysUser findByUsername(String username){
+		return dao.findUnique("where username=?", username);
+	}
+	
+	public void saveBasic(SysUser user){
+		SysUser o = dao.find(user.getId());
+		o.setAppid(user.getAppid());
+		o.setAppkey(user.getAppkey());
+		o.setSiteLogo(user.getSiteLogo());
+		o.setSiteTel(user.getSiteTel());
+		o.setWxName(user.getWxName());
+		o.setWxNumber(user.getWxNumber());
+		dao.update(o);
 	}
 	
 	@Override

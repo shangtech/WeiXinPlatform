@@ -56,11 +56,17 @@ public class SysUser extends IBaseEntity {
 	@Column(name = "description")
 	private String description;
 	
-	@Column(name = "penid")
+	@Column(name = "openid")
 	private String openid;
 	
 	@Column(name = "user_type")
 	private Integer userType;
+	
+	@Column(name = "site_logo")
+	private String siteLogo;
+	
+	@Column(name = "site_tel")
+	private String siteTel;
 
 	public String getUsername() {
 		return username;
@@ -188,6 +194,22 @@ public class SysUser extends IBaseEntity {
 
 	public void setUserType(Integer userType) {
 		this.userType = userType;
+	}
+
+	public String getSiteLogo() {
+		return siteLogo;
+	}
+
+	public void setSiteLogo(String siteLogo) {
+		this.siteLogo = siteLogo;
+	}
+
+	public String getSiteTel() {
+		return siteTel;
+	}
+
+	public void setSiteTel(String siteTel) {
+		this.siteTel = siteTel;
 	}
 
 }

@@ -11,7 +11,7 @@
               <li><a href="calendar.html"><i class="batch calendar"></i><br />微营销</a></li>
               <li><a href="faq.html"><i class="batch forms"></i><br />数据统计</a></li>
               <li><a href="users.html"><i class="batch users"></i><br />充值中心</a></li>
-              <li><a href="settings.html"><i class="batch settings"></i><br />账户管理</a></li>
+              <li><a href="${ctx}/manage/user/basic.htm"><i class="batch settings"></i><br />账户管理</a></li>
               <li><a href="paragraphs.html"><i class="batch quill"></i><br />帮助中心</a></li>
             </ul>
           </div>
