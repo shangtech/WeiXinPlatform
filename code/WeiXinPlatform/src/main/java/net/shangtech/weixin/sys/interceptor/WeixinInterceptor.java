@@ -37,11 +37,8 @@ public class WeixinInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
 			Object handler) throws Exception {
-		//String token = request.getParameter("t");
-		//SysUser user = sysUserService.findByToken(token);
-		SysUser user = new SysUser();
-		user.setId(0);
-		sysUserService.find(0);
+		String appid = request.getParameter("a");
+		SysUser user = sysUserService.findByAppid(appid);
 		request.setAttribute("sysUser", user);
 		return true;
 	}

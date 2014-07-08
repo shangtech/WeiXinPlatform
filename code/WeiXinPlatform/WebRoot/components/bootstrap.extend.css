@@ -104,6 +104,7 @@ form.form-condensed .controls{margin-left:100px;}
 
 .project{display:none;cursor:pointer;margin-bottom:20px;}
 .show .project{display:block;}
+.show.project{display:block;}
 .project-image{border-radius:4px 4px 0 0;position:relative;}
 .project-image img{width:100%;border-radius:4px 4px 0 0;}
 .project-name{border-radius:0 0 4px 4px;padding:0.5em 0;background:#d4d7df;}

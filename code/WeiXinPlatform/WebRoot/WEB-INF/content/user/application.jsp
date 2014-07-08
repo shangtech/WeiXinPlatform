@@ -364,18 +364,6 @@
     positionClass: 'toast-bottom-left'
   };
 
-  delay(1000, function() {
-    return toastr.success('Have fun storming the castle!', 'Miracle Max Says');
-  });
-
-  delay(1500, function() {
-    return toastr.warning('My name is Inigo Montoya. You Killed my father, prepare to die!');
-  });
-
-  delay(2000, function() {
-    return toastr.error('I do not think that word means what you think it means.', 'Inconceivable!');
-  });
-
 }).call(this);
 </script>
       </div>

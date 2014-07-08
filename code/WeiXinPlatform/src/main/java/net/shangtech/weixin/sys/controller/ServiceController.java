@@ -171,7 +171,14 @@ public class ServiceController extends BaseController {
 				JSONObject sub = new JSONObject();
 				sub.put("name", child.getMenuName());
 				sub.put("type", "view");
-				sub.put("url", child.getMenuUrl());
+				String url = child.getMenuUrl();
+				if(url.contains("?")){
+					url += "&";
+				}else{
+					url += "?";
+				}
+				url += "a="+user.getAppid();
+				sub.put("url", url);
 //				if(MenuType.CLICK.getType().equals(child.getMenuType())){
 //					sub.put("type", child.getMenuType());
 //					sub.put("key", child.getMenuKey());
@@ -189,7 +196,14 @@ public class ServiceController extends BaseController {
 				continue;
 			}
 			obj.put("type", "view");
-			obj.put("url", menu.getMenuUrl());
+			String url = menu.getMenuUrl();
+			if(url.contains("?")){
+				url += "&";
+			}else{
+				url += "?";
+			}
+			url += "a="+user.getAppid();
+			obj.put("url", url);
 //			if(MenuType.CLICK.getType().equals(menu.getMenuType())){
 //				obj.put("type", menu.getMenuType());
 //				obj.put("key", menu.getMenuKey());

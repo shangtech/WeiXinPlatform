@@ -11,7 +11,7 @@
         	<thead>
         		<tr><th width="25%">楼盘分类</th><th>楼盘列表</th></tr>
         	</thead>
-        	<tbody>
+        	<tbody style="height:364px;">
         		<tr>
         			<td class="nopadding">
         				<div id="menulist">
@@ -92,7 +92,7 @@
     	<button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
     	<h3>楼盘详情</h3>
   	</div>
-  	<div class="modal-body" style="max-height:650px;"></div>
+  	<div class="modal-body" style="max-height:550px;"></div>
   	<div class="modal-footer">
 	  	<a href="javascript:;" data-dismiss="modal" class="btn">取消</a>
 	  	<a href="javascript:;" class="btn btn-primary submit">保存</a>

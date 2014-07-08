@@ -47,7 +47,7 @@
         	<thead>
         		<tr><th width="25%">菜单管理</th><th>动作设置</th></tr>
         	</thead>
-        	<tbody>
+        	<tbody style="height:364px;">
         		<tr>
         			<td class="nopadding">
         				<div id="menulist">
