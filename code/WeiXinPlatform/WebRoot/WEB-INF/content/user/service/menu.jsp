@@ -39,6 +39,7 @@
     	<div class="pull-right">
       <a href="#" id="addMenuBtn" class="btn">添加菜单</a>
       <a href="#" id="addMenuBtn" class="btn">排序</a>
+      <a href="#" id="syncMenuBtn" class="btn">同步至微信</a>
       </div>
       <h4 class="header">自定义菜单</h4>
       <div id="d3" style="width: 100%; margin-top: -30px"></div><br />

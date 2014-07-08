@@ -34,7 +34,7 @@ public class EncoderUtils {
 		return sb.toString();
 	}
 	public static void main(String[] args){
-		System.out.println("1=" + EncoderUtils.MD5(EncoderUtils.MD5("1")));
+		System.out.println("1=" + EncoderUtils.MD5(EncoderUtils.MD5("songxh@19900212")));
 		System.out.println(EncoderUtils.SHA1("songxh"));
 	}
 }

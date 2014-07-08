@@ -96,6 +96,19 @@ $(document).ready(function(){
 		$('#id').val('');
 		$('#menuFormModal').modal('toggle');
 	});
+	$('#syncMenuBtn').click(function(){
+		$.ajax({
+			url: 'wxmenu/sync.htm',
+			dataType: 'json',
+			success: function(result){
+				if(!result.success){
+					alert(result.msg);
+					return;
+				}
+				alert('同步成功');
+			}
+		});
+	});
 	$('#menulist').on('click', '.edit', function(){
 		var node = $(this).parent().parent();
 		$('#parentId').val(node.attr('data-parent'));
@@ -146,7 +159,7 @@ $(document).ready(function(){
 			$(this).children().removeClass('icon-white');
 		}
 	});
-	$('#menulist .menunode').click(function(){
+	$('#menulist').on('click' ,'.menunode', function(){
 		var node = $(this);
 		if(!node.hasClass('on')){
 			$('#menulist .on').removeClass('on');

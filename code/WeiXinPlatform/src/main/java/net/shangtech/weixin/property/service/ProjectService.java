@@ -165,6 +165,14 @@ public class ProjectService extends BaseService<SubProject> {
 		return imageDao.find("where projectId=?", projectId);
 	}
 	
+	public List<HousePanorama> findParoamasByHouse(int houseId){
+		List<HousePanorama> list = housePanoramaDao.find("where houseId=?", houseId);
+		for(HousePanorama panorama : list){
+			panorama.setPanorama(panoramaDao.find(panorama.getPanoramaId()));
+		}
+		return list;
+	}
+	
 	@Override
 	protected BaseDao<SubProject> dao() {
 		return dao;

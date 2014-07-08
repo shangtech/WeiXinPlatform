@@ -11,7 +11,7 @@
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="#basic" data-toggle="tab">基础信息</a></li>
 			<li><a href="#houses" data-toggle="tab">户型列表</a></li>
-			<li><a href="javascript:;">3D全景图</a></li>
+			<li><a id="tab-3dimage" href="javascript:;">3D全景图</a></li>
 		</ul>
 		
 		<div class="tab-content">
@@ -139,9 +139,9 @@
         </div>
     </div>
     <div id="load_address">
-    	<div id="l-map" style="width: 100%; height: 452px;margin-bottom:30px;"></div>
-    	<input type="hidden" id="latitude" name="latitude" value="${project.latitude}"/>
-    	<input type="hidden" id="longitude" name="longitude" value="${project.longitude}"/>
+    	<div id="l-map" style="width: 100%; height: 452px;margin-bottom:30px;">
+    		<iframe src="${ctx}/site_template/temp001/admin/map.html" width="100%" height="100%" frameborder="0"></iframe>
+    	</div>
     </div>
     <div class="control-group">
         <label for="image_1" class="control-label">楼盘图片</label>
@@ -237,7 +237,112 @@
 				</form>
 			</div>
 			<div class="tab-pane" id="house-3d">
-				<form class="form-horizontal form-condensed" method="post" action="house/save.htm" enctype="multipart/form-data">
+				<table class="table table-bordered table-hover">
+					<thead>
+						<tr><th>全景名称</th><th>排序</th><th width="240">操作</th></tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${panoramas}" var="item">
+						<tr data-id="${item.id}">
+							<td>${item.panoramaName}</td>
+							<td>${item.sort}</td>
+							<td class="btngroup tc">
+								<div class="btn-group">
+									<a href="javascript:;" class="btn remove">删除</a>
+								</div>
+							</td>
+						</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				<form class="form-horizontal form-condensed" method="post" action="panorama/save.htm" enctype="multipart/form-data">
+					<div class="control-group">
+				        <label for="houseName" class="control-label">全景图名称</label>
+				        <div class="controls">
+				        <div class="row-fluid">
+				          <input name="imageName" class="span9" type="text" placeholder="全景图名称" />
+				          <input type="hidden" name="id" id="panorama-house-id"/>
+				        </div>
+				        </div>
+				    </div>
+				    <div class="control-group">
+				        <label for="image" class="control-label">前</label>
+					    <div class="controls uploader">
+					    	<div class="row-fluid">
+						    <input type="file" id="imageFront" name="image_front" class="span9" data-for="imageFront"/>
+					 		<div class="input-append span9">
+						        <span class="span12 fileholder" id="fileholder-imageFront">请选择文件</span>
+						        <span class="btn span2 filebtn action" id="filebtn-imageFront">选择</span>
+					    	</div>
+					    	</div>
+				     	</div>
+				    </div>
+				    <div class="control-group">
+				        <label for="image" class="control-label">后</label>
+					    <div class="controls uploader">
+					    	<div class="row-fluid">
+						    <input type="file" id="imageBack" name="image_back" class="span9" data-for="imageBack"/>
+					 		<div class="input-append span9">
+						        <span class="span12 fileholder" id="fileholder-imageBack">请选择文件</span>
+						        <span class="btn span2 filebtn action" id="filebtn-imageBack">选择</span>
+					    	</div>
+					    	</div>
+				     	</div>
+				    </div>
+				    <div class="control-group">
+				        <label for="image" class="control-label">左</label>
+					    <div class="controls uploader">
+					    	<div class="row-fluid">
+						    <input type="file" id="imageLeft" name="image_left" class="span9" data-for="imageLeft"/>
+					 		<div class="input-append span9">
+						        <span class="span12 fileholder" id="fileholder-imageLeft">请选择文件</span>
+						        <span class="btn span2 filebtn action" id="filebtn-imageLeft">选择</span>
+					    	</div>
+					    	</div>
+				     	</div>
+				    </div>
+				    <div class="control-group">
+				        <label for="image" class="control-label">右</label>
+					    <div class="controls uploader">
+					    	<div class="row-fluid">
+						    <input type="file" id="imageRight" name="image_right" class="span9" data-for="imageRight"/>
+					 		<div class="input-append span9">
+						        <span class="span12 fileholder" id="fileholder-imageRight">请选择文件</span>
+						        <span class="btn span2 filebtn action" id="filebtn-imageRight">选择</span>
+					    	</div>
+					    	</div>
+				     	</div>
+				    </div>
+				    <div class="control-group">
+				        <label for="image" class="control-label">上</label>
+					    <div class="controls uploader">
+					    	<div class="row-fluid">
+						    <input type="file" id="imageTop" name="image_top" class="span9" data-for="imageTop"/>
+					 		<div class="input-append span9">
+						        <span class="span12 fileholder" id="fileholder-imageTop">请选择文件</span>
+						        <span class="btn span2 filebtn action" id="filebtn-imageTop">选择</span>
+					    	</div>
+					    	</div>
+				     	</div>
+				    </div>
+				    <div class="control-group">
+				        <label for="image" class="control-label">下</label>
+					    <div class="controls uploader">
+					    	<div class="row-fluid">
+						    <input type="file" id="imageBottom" name="image_bottom" class="span9" data-for="imageBottom"/>
+					 		<div class="input-append span9">
+						        <span class="span12 fileholder" id="fileholder-imageBottom">请选择文件</span>
+						        <span class="btn span2 filebtn action" id="filebtn-imageBottom">选择</span>
+					    	</div>
+					    	</div>
+				     	</div>
+				    </div>
+				    <div class="control-group">
+				    	<div class="controls">
+				    		<a href="javascript" class="btn submit">保存</a>
+				    	</div>
+				    </div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -255,5 +360,4 @@
 		width:666,
 		height:140
 	});
-    initMap();//创建和初始化地图
 </script>

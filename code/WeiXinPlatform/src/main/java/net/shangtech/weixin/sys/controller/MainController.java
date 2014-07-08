@@ -55,8 +55,8 @@ public class MainController extends BaseController {
 		if(user == null){
 			return failed("用户名或密码错误");
 		}
-		System.out.println(user.getPassword());
-		System.out.println(EncoderUtils.MD5(username+"@"+password));
+		//System.out.println(user.getPassword());
+		//System.out.println(EncoderUtils.MD5(username+"@"+password));
 		if(!user.getPassword().equals(EncoderUtils.MD5(username+"@"+password))){
 			return failed("用户名或密码错误");
 		}

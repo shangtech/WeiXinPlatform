@@ -101,6 +101,5 @@
 <script type="text/javascript" src="${ctx}/components/user/js/jqueryui.core.js"></script>
 <script type="text/javascript" src="${ctx}/components/bootstrap.singlefile.js"></script>
 <script type="text/javascript" src="${ctx}/components/js/user/application/property.js"></script>
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=UP2S64ZI4ohv64DOEE3yz7F9"></script>
 <script type="text/javascript" src="${ctx}/components/kindeditor/kindeditor-min.js"></script>
 <script type="text/javascript" src="${ctx}/components/kindeditor/lang/zh_CN.js"></script>

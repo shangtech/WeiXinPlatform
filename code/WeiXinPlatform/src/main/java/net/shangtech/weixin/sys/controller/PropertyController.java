@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.shangtech.ssh.core.base.BaseController;
 import net.shangtech.ssh.core.util.FileUtils;
 import net.shangtech.weixin.property.entity.HouseInfo;
+import net.shangtech.weixin.property.entity.HousePanorama;
 import net.shangtech.weixin.property.entity.ProjectImage;
 import net.shangtech.weixin.property.entity.ProjectType;
 import net.shangtech.weixin.property.entity.SubProject;
@@ -247,4 +248,11 @@ public class PropertyController extends BaseController {
 		return null;
 	}
 	
+	@RequestMapping("/panorama/list")
+	public String panoramaList(){
+		Integer houseId = getInt("hosueId");
+		List<HousePanorama> list = projectService.findParoamasByHouse(houseId);
+		request.setAttribute("list", list);
+		return PATH + "/house-3d-images";
+	}
 }

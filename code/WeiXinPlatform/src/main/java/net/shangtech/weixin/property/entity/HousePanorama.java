@@ -3,6 +3,7 @@ package net.shangtech.weixin.property.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import net.shangtech.ssh.core.base.IBaseEntity;
 
@@ -23,6 +24,9 @@ public class HousePanorama extends IBaseEntity{
 	
 	@Column(name = "panorama_id")
 	private Integer panoramaId;
+	
+	@Transient
+	private Panorama panorama;
 
 	public Integer getHouseId() {
 		return houseId;
@@ -54,6 +58,14 @@ public class HousePanorama extends IBaseEntity{
 
 	public void setPanoramaId(Integer panoramaId) {
 		this.panoramaId = panoramaId;
+	}
+
+	public Panorama getPanorama() {
+		return panorama;
+	}
+
+	public void setPanorama(Panorama panorama) {
+		this.panorama = panorama;
 	}
 	
 }

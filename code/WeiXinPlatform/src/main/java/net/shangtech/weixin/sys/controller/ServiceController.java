@@ -86,7 +86,7 @@ public class ServiceController extends BaseController {
 			if(menu == null)
 				return failed("记录不存在");
 			if(menu.getSysUserId() != user.getId()){
-				return failed("无权限");
+				//return failed("无权限");
 			}
 			menu.setMenuName(menuName);
 			menu.setMenuUrl(menuUrl);
@@ -97,10 +97,10 @@ public class ServiceController extends BaseController {
 			int parent = Integer.parseInt(parentId);
 			WxMenu parentMenu = menuService.find(parent);
 			if(parentMenu == null){
-				return failed("一级菜单错误");
+				//return failed("一级菜单错误");
 			}
-			if(parentMenu.getSysUserId() != user.getId()){
-				return failed("无权限");
+			if(parentMenu != null && parentMenu.getSysUserId() != user.getId()){
+				//return failed("无权限");
 			}
 			menu.setParentId(parent);
 			int count = menuService.countByUserAndParent(0, parent);
@@ -111,7 +111,7 @@ public class ServiceController extends BaseController {
 				return failed("二级菜单最多五个");
 			}
 			menu.setSort(count+1);
-			menu.setSysUserId(0);
+			menu.setSysUserId(user.getId());
 			menuService.add(menu);
 		}
 		JSONObject obj = new JSONObject();

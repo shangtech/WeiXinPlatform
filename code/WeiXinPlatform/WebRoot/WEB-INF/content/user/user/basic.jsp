@@ -53,7 +53,7 @@
 		        <label for="url" class="control-label">url</label>
 		        <div class="controls">
 		        	<div class="input-append">
-		          		<input id="url" class="input-xlarge" type="text" value="http://localhost/" readonly="true"/>
+		          		<input id="url" class="input-xlarge" type="text" value="http://203.195.148.137/${user.appid}.htm" readonly="true"/>
 		          		<a href="javascript:;" class="btn hastooltip" data-toggle="tooltip" data-title="复制到剪贴板" data-placement="top">复制</a>
 		          	</div>
 		        </div>
