@@ -26,27 +26,8 @@
 	        document.zc.sj.focus(); 
 	        return false; 
 	    } 
+	    return true;
 	} 
-	$(document).ready(function(){
-		$('.submit').click(function(){
-			if(checkMobile()){
-				$.ajax({
-					url: 'save.htm',
-					data: {
-						xm: $('#xm').val(),
-						sj: $('#sj').val(),
-						appointment: $('#appointmentId').val()
-					},
-					dataType: 'json',
-					method: 'POST',
-					success: function(result){
-						alert('预约成功');
-						$('#zc')[0].reset();
-					}
-				});
-			}
-		});
-	});
 	</script>    
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
@@ -89,5 +70,27 @@
 	<script type="text/javascript" src="${ctx}/components/user/js/jquery.min.js"></script>
 	<script src="${ctx}/site_template/temp002/js/jquery.easing.1.3.js"></script>
 	<script src="${ctx}/site_template/temp002/js/99_main.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$('.submit').click(function(){
+			if(checkMobile()){
+				$.ajax({
+					url: 'save.htm',
+					data: {
+						xm: $('#xm').val(),
+						sj: $('#sj').val(),
+						appointment: $('#appointmentId').val()
+					},
+					dataType: 'json',
+					method: 'POST',
+					success: function(result){
+						alert('预约成功');
+						$('#zc')[0].reset();
+					}
+				});
+			}
+		});
+	});
+	</script>
 </body>
 </html>

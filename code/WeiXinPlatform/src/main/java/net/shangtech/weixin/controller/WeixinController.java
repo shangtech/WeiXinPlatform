@@ -27,21 +27,20 @@ public class WeixinController extends BaseController {
 	@Autowired private SysUserService sysUserService;
 	@RequestMapping("/{appid}")
 	public String main(HttpServletRequest request, HttpServletResponse response, @PathVariable String appid){
-		this.response = response;
 		SysUser user = sysUserService.findByAppid(appid);
-		if(!check(user)){
+		if(!check(request, user)){
 			
 		}
 		String echostr = request.getParameter("echostr");
 		if(StringUtils.isNotBlank(echostr)){
-			out(echostr);
+			out(response, echostr);
 			return null;
 		}
 		return null;
 	}
 	
 	//验证消息来源
-	private boolean check(SysUser user){
+	private boolean check(HttpServletRequest request, SysUser user){
 		String signature = request.getParameter("signature");
 		String timestamp = request.getParameter("timestamp");
 		String nonce = request.getParameter("nonce");

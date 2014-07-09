@@ -26,11 +26,11 @@ public class NewsController extends BaseController {
 	private static final String PATH = "user/application/news";
 	
 	@RequestMapping("/form")
-	public String newsForm(){
-		SysUser user = getUser();
+	public String newsForm(HttpServletRequest request){
+		SysUser user = getUser(request);
 		List<NewsType> typeList = service.findNewsTypeByUserId(user.getId());
 		request.setAttribute("typeList", typeList);
-		Integer id = getId();
+		Integer id = getId(request);
 		News news = new News();
 		if(id != null){
 			news = service.find(id);
@@ -40,8 +40,8 @@ public class NewsController extends BaseController {
 	}
 	
 	@RequestMapping("/type/form")
-	public String typeForm(){
-		Integer id = getId();
+	public String typeForm(HttpServletRequest request){
+		Integer id = getId(request);
 		NewsType type = new NewsType();
 		if(id != null){
 			type = service.findType(id);
@@ -51,17 +51,15 @@ public class NewsController extends BaseController {
 	}
 	
 	@RequestMapping("/delete")
-	public String delete(HttpServletResponse response){
-		this.response = response;
-		Integer id = getId();
+	public String delete(HttpServletRequest request, HttpServletResponse response){
+		Integer id = getId(request);
 		service.delete(id);
-		return success();
+		return success(response);
 	}
 	
 	@RequestMapping("/save")
 	public String saveNews(HttpServletRequest request, HttpServletResponse response, News news){
-		this.response = response;
-		SysUser user = getUser();
+		SysUser user = getUser(request);
 		try{
 			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 			MultipartFile image = multipartRequest.getFile("image_file");
@@ -71,14 +69,14 @@ public class NewsController extends BaseController {
 			news.setSysUserId(user.getId());
 			service.saveNews(news);
 		}catch(IOException e){
-			return failed("文件保存出错");
+			return failed(response, "文件保存出错");
 		}
-		return success();
+		return success(response);
 	}
 	
 	@RequestMapping("/list")
-	public String list(){
-		SysUser user = getUser();
+	public String list(HttpServletRequest request){
+		SysUser user = getUser(request);
 		List<News> list = service.findAllNewsBySysUser(user.getId());
 		for(News news : list){
 			news.setNewsType(service.findType(news.getType()));
@@ -88,27 +86,25 @@ public class NewsController extends BaseController {
 	}
 	
 	@RequestMapping("/type/list")
-	public String typeList(){
-		SysUser user = getUser();
+	public String typeList(HttpServletRequest request){
+		SysUser user = getUser(request);
 		List<NewsType> list = service.findNewsTypeByUserId(user.getId());
 		request.setAttribute("list", list);
 		return PATH + "/type-list";
 	}
 	
 	@RequestMapping("/type/save")
-	public String saveType(HttpServletResponse response, NewsType type){
-		this.response = response;
-		SysUser user = getUser();
+	public String saveType(HttpServletRequest request, HttpServletResponse response, NewsType type){
+		SysUser user = getUser(request);
 		type.setSysUserId(user.getId());
 		service.saveType(type);
-		return success();
+		return success(response);
 	}
 	
 	@RequestMapping("/type/delete")
-	public String deleteType(HttpServletResponse response){
-		this.response = response;
-		Integer id = getId();
+	public String deleteType(HttpServletRequest request, HttpServletResponse response){
+		Integer id = getId(request);
 		service.deleteType(id);
-		return success();
+		return success(response);
 	}
 }

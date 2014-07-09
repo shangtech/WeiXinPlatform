@@ -1,5 +1,7 @@
 package net.shangtech.weixin.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import net.shangtech.ssh.core.base.BaseController;
 import net.shangtech.weixin.site.entity.CustomPage;
 import net.shangtech.weixin.site.entity.SiteInfo;
@@ -19,16 +21,16 @@ public class SiteController extends BaseController {
 	@Autowired private CustomPageService pageService;
 	@Autowired private SiteTemplateService tempService;
 	@RequestMapping("/info")
-	public String info(){
-		Integer id = getId();
+	public String info(HttpServletRequest request){
+		Integer id = getId(request);
 		SiteInfo info = service.find(id);
 		request.setAttribute("info", info);
 		return "weixin/site/info";
 	}
 	
 	@RequestMapping("/custom/page")
-	public String customPage(){
-		Integer id = getId();
+	public String customPage(HttpServletRequest request){
+		Integer id = getId(request);
 		CustomPage page = pageService.find(id);
 		SiteTemplate temp = tempService.find(page.getTemp());
 		request.setAttribute("page", page);

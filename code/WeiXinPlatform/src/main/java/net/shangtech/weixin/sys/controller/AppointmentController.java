@@ -39,21 +39,21 @@ public class AppointmentController extends BaseController {
 	@Autowired private SiteTemplateService tempService;
 	private static final String PATH = "user/application/appointment";
 	@RequestMapping("/list")
-	public String list(){
-		return listPage("1");
+	public String list(HttpServletRequest request){
+		return listPage(request, "1");
 	}
 	@RequestMapping("/list/p{pageInfo}")
-	public String listPage(@PathVariable String pageInfo){
+	public String listPage(HttpServletRequest request, @PathVariable String pageInfo){
 		int pageSize = super.parsePageSize(pageInfo, 10);
 		int pageNo = super.parsePageNo(pageInfo);
-		SysUser user = super.getUser();
+		SysUser user = super.getUser(request);
 		Page<Appointment> page = service.findAppointmentByPage(pageNo, pageSize, user.getId());
 		request.setAttribute("page", page);
 		return PATH + "/list";
 	}
 	
 	@RequestMapping("/form")
-	public String form(){
+	public String form(HttpServletRequest request){
 		List<SiteTemplate> tempList = tempService.findByType(SiteTemplateType.APPOINTMENT.getType());
 		request.setAttribute("tempList", tempList);
 		return PATH + "/form";
@@ -67,9 +67,8 @@ public class AppointmentController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/save")
-	public String saveAppointment(HttpServletResponse response, Appointment appointment){
-		this.response = response;
-		SysUser user = getUser();
+	public String saveAppointment(HttpServletRequest request, HttpServletResponse response, Appointment appointment){
+		SysUser user = getUser(request);
 		String startTimeStr = request.getParameter("start_time");
 		String endTimeStr = request.getParameter("end_time");
 		appointment.setStartTime(DateUtils.parse(startTimeStr+":00"));
@@ -77,15 +76,14 @@ public class AppointmentController extends BaseController {
 		appointment.setCreateTime(new Date());
 		appointment.setSysUserId(user.getId());
 		service.add(appointment);
-		return success();
+		return success(response);
 	}
 	
 	@RequestMapping("/delete")
-	public String deleteAppointment(HttpServletResponse response){
-		this.response = response;
-		Integer id = getId();
+	public String deleteAppointment(HttpServletRequest request, HttpServletResponse response){
+		Integer id = getId(request);
 		service.delete(id);
-		return success();
+		return success(response);
 	}
 	private static List<String> ALLOW_TYPES = Arrays.asList(".jpg", ".jpeg", ".png", ".mp3");
 	/**
@@ -98,30 +96,29 @@ public class AppointmentController extends BaseController {
 	 */
 	@RequestMapping("/image/save")
 	public String saveImage(HttpServletRequest request, HttpServletResponse response){
-		this.response = response;
 		MultipartFile file = null;
 		try{
 			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 			file = multipartRequest.getFile("image");
 			if(file == null){
-				return failed("文件上传失败");
+				return failed(response, "文件上传失败");
 			}
 			String name = file.getOriginalFilename();
 			if(StringUtils.isBlank(name) || !name.contains(".")){
-				return failed("文件格式错误");
+				return failed(response, "文件格式错误");
 			}
 			String extend = name.substring(name.lastIndexOf("."));
 			if(!ALLOW_TYPES.contains(extend)){
-				return failed("不支持的文件格式");
+				return failed(response, "不支持的文件格式");
 			}
 			String path = FileUtils.saveStreamToFile(file.getInputStream(), file.getOriginalFilename());
-			return success(path);
+			return success(response, path);
 		}catch(ClassCastException e){
 			e.printStackTrace();
-			return failed("保存文件失败");
+			return failed(response, "保存文件失败");
 		}catch(IOException e){
 			e.printStackTrace();
-			return failed("保存文件失败");
+			return failed(response, "保存文件失败");
 		}
 	}
 	
@@ -143,8 +140,8 @@ public class AppointmentController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/template/form")
-	public String formTemplate(){
-		Integer id = getId();
+	public String formTemplate(HttpServletRequest request){
+		Integer id = getId(request);
 		SiteTemplate temp = tempService.find(id);
 		request.setAttribute("temp", temp);
 		return PATH + "/temp-form";

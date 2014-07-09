@@ -2,6 +2,8 @@ package net.shangtech.weixin.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import net.shangtech.ssh.core.base.BaseController;
 import net.shangtech.weixin.site.entity.News;
 import net.shangtech.weixin.site.entity.NewsType;
@@ -16,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class NewsController extends BaseController {
 	@Autowired private NewsService service;
 	@RequestMapping("/list")
-	public String list(){
-		Integer type = getInt("type");
+	public String list(HttpServletRequest request){
+		Integer type = getInt(request, "type");
 		List<News> list = service.findPublishedNewsByType(type);
 		request.setAttribute("list", list);
 		request.setAttribute("tip", "详情");
@@ -25,8 +27,8 @@ public class NewsController extends BaseController {
 	}
 	
 	@RequestMapping("/view")
-	public String view(){
-		Integer id = getId();
+	public String view(HttpServletRequest request){
+		Integer id = getId(request);
 		News news = service.find(id);
 		NewsType type = service.findType(news.getType());
 		request.setAttribute("news", news);

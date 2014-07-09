@@ -3,6 +3,7 @@ package net.shangtech.weixin.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.shangtech.ssh.core.base.BaseController;
@@ -31,8 +32,8 @@ public class AppointmentController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/list")
-	public String list(){
-		SysUser user = getUser();
+	public String list(HttpServletRequest request){
+		SysUser user = getUser(request);
 		List<Appointment> list = service.findBySysUserId(user.getId());
 		request.setAttribute("list", list);
 		request.setAttribute("url", "view.htm");
@@ -41,8 +42,8 @@ public class AppointmentController extends BaseController {
 	}
 	
 	@RequestMapping("/view")
-	public String view(){
-		Integer id = getId();
+	public String view(HttpServletRequest request){
+		Integer id = getId(request);
 		Appointment appointment = service.find(id);
 		request.setAttribute("appointment", appointment);
 		SiteTemplate temp = tempService.find(appointment.getTempId());
@@ -51,17 +52,16 @@ public class AppointmentController extends BaseController {
 	}
 	
 	@RequestMapping("/save")
-	public String save(HttpServletResponse response){
-		this.response = response;
+	public String save(HttpServletRequest request, HttpServletResponse response){
 		String xm = request.getParameter("xm");
 		String tel = request.getParameter("tel");
-		Integer appointment = getInt("appointment");
+		Integer appointment = getInt(request, "appointment");
 		AppointmentHistory history = new AppointmentHistory();
 		history.setCreateTime(new Date());
 		history.setRealName(xm);
 		history.setTel(tel);
 		history.setAppointmentId(appointment);
 		service.saveAppointmentHistory(history);
-		return success();
+		return success(response);
 	}
 }

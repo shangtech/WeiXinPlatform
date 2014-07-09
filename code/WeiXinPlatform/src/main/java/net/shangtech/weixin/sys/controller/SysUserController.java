@@ -22,28 +22,27 @@ public class SysUserController extends BaseController {
 	@Autowired private SysUserService service;
 	private static final String PATH = "user/user";
 	@RequestMapping("/basic")
-	public String basic(){
-		SysUser user = service.find(getUser().getId());
+	public String basic(HttpServletRequest request){
+		SysUser user = service.find(getUser(request).getId());
 		request.setAttribute("user", user);
 		return PATH + "/basic";
 	}
 	
 	@RequestMapping("/basic/save")
 	public String basicSave(HttpServletRequest request, HttpServletResponse response, SysUser user){
-		this.response = response;
 		try{
 			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 			MultipartFile image = multipartRequest.getFile("image_file");
 			if(image != null){
 				user.setSiteLogo(FileUtils.saveStreamToFile(image.getInputStream(), image.getOriginalFilename()));
 			}
-			user.setId(getUser().getId());
+			user.setId(getUser(request).getId());
 			service.saveBasic(user);
 			request.getSession().setAttribute("user", user);
 		}catch(IOException e){
 			e.printStackTrace();
-			return failed("文件保存出错");
+			return failed(response, "文件保存出错");
 		}
-		return success();
+		return success(response);
 	}
 }

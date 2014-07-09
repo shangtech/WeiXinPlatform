@@ -1,5 +1,6 @@
 package net.shangtech.weixin.sys.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.shangtech.ssh.core.base.BaseController;
@@ -17,12 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MainController extends BaseController {
 	@Autowired private SysUserService userService;
 	@RequestMapping("/index")
-	public String index(){
+	public String index(HttpServletRequest request){
 		return "user/index";
 	}
 	
 	@RequestMapping("/service")
-	public String service(){
+	public String service(HttpServletRequest request){
 		return "user/service";
 	}
 	
@@ -31,36 +32,35 @@ public class MainController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/application")
-	public String application(){
+	public String application(HttpServletRequest request){
 		return "user/application";
 	}
 	
 	@RequestMapping("/prelogin")
-	public String loginForm(){
+	public String loginForm(HttpServletRequest request){
 		return "login";
 	}
 	
 	@RequestMapping("/login")
-	public String login(HttpServletResponse response){
-		this.response = response;
+	public String login(HttpServletRequest request, HttpServletResponse response){
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		if(StringUtils.isBlank(username)){
-			return failed("请填写用户名");
+			return failed(response, "请填写用户名");
 		}
 		if(StringUtils.isBlank(password)){
-			return failed("请填写登录密码");
+			return failed(response, "请填写登录密码");
 		}
 		SysUser user = userService.findByUsername(username);
 		if(user == null){
-			return failed("用户名或密码错误");
+			return failed(response, "用户名或密码错误");
 		}
 		//System.out.println(user.getPassword());
 		//System.out.println(EncoderUtils.MD5(username+"@"+password));
 		if(!user.getPassword().equals(EncoderUtils.MD5(username+"@"+password))){
-			return failed("用户名或密码错误");
+			return failed(response, "用户名或密码错误");
 		}
 		request.getSession().setAttribute("user", user);
-		return success();
+		return success(response);
 	}
 }

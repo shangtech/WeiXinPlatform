@@ -38,7 +38,7 @@ public class SiteController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/template")
-	public String template(){
+	public String template(HttpServletRequest request){
 		//查询系统中可用的模模板供用户选择
 		List<SiteTemplate> list = templateService.find();
 		request.setAttribute("list", list);
@@ -48,15 +48,15 @@ public class SiteController extends BaseController {
 	}
 	
 	@RequestMapping("/info/list")
-	public String siteInfoList(){
-		List<SiteInfo> list = siteInfoService.find("where sysUserId=?", getUser().getId());
+	public String siteInfoList(HttpServletRequest request){
+		List<SiteInfo> list = siteInfoService.find("where sysUserId=?", getUser(request).getId());
 		request.setAttribute("list", list);
 		return "user/application/site/info-list";
 	}
 	@RequestMapping("/info/form")
-	public String siteInfoForm(){
+	public String siteInfoForm(HttpServletRequest request){
 		SiteInfo info = new SiteInfo();
-		Integer id = getId();
+		Integer id = getId(request);
 		if(id != null){
 			info = siteInfoService.find(id);
 		}
@@ -66,35 +66,33 @@ public class SiteController extends BaseController {
 	
 	@RequestMapping("/info/save")
 	public String siteInfoSave(HttpServletRequest request, HttpServletResponse response, SiteInfo info){
-		this.response = response;
-		SysUser user = getUser();
+		SysUser user = getUser(request);
 		info.setSysUserId(user.getId());
 		siteInfoService.save(info);
-		return success();
+		return success(response);
 	}
 	
 	@RequestMapping("/info/delete")
-	public String siteInfoDel(HttpServletResponse response){
-		this.response = response;
-		Integer id = getId();
+	public String siteInfoDel(HttpServletRequest request, HttpServletResponse response){
+		Integer id = getId(request);
 		siteInfoService.delete(id);
-		return success();
+		return success(response);
 	}
 	
 	@RequestMapping("/page/list")
-	public String pageList(){
-		SysUser user = getUser();
+	public String pageList(HttpServletRequest request){
+		SysUser user = getUser(request);
 		List<CustomPage> list = pageService.find("where sysUserId=?", user.getId());
 		request.setAttribute("list", list);
 		return "user/application/site/page-list";
 	}
 	
 	@RequestMapping("/page/form")
-	public String pageForm(){
+	public String pageForm(HttpServletRequest request){
 		List<SiteTemplate> list = templateService.find("where type=?", SiteTemplateType.CUSTOM_PAGE.getType());
 		request.setAttribute("list", list);
 		CustomPage page = new CustomPage();
-		Integer id = getId();
+		Integer id = getId(request);
 		if(id != null){
 			page = pageService.find(id);
 		}
@@ -103,25 +101,23 @@ public class SiteController extends BaseController {
 	}
 	
 	@RequestMapping("/page/save")
-	public String pageSave(HttpServletResponse response, CustomPage page){
-		this.response = response;
-		SysUser user = getUser();
+	public String pageSave(HttpServletRequest request, HttpServletResponse response, CustomPage page){
+		SysUser user = getUser(request);
 		page.setSysUserId(user.getId());
 		page.setCreateTime(new Date());
 		pageService.add(page);
-		return success();
+		return success(response);
 	}
 	
 	@RequestMapping("/page/delete")
-	public String pageDelete(HttpServletResponse response){
-		this.response = response;
-		Integer id = getId();
+	public String pageDelete(HttpServletRequest request, HttpServletResponse response){
+		Integer id = getId(request);
 		pageService.delete(id);
-		return success();
+		return success(response);
 	}
 	@RequestMapping("/page/form/temp")
-	public String pageFormTemp(){
-		Integer id = getId();
+	public String pageFormTemp(HttpServletRequest request){
+		Integer id = getId(request);
 		SiteTemplate temp = templateService.find(id);
 		request.setAttribute("temp", temp);
 		return "user/application/site/page-form-temp";

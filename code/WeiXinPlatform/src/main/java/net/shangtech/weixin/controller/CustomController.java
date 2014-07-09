@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import net.shangtech.ssh.core.base.BaseController;
 import net.shangtech.weixin.custom.entity.CustomService;
 import net.shangtech.weixin.custom.entity.CustomServiceGroup;
@@ -19,8 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class CustomController extends BaseController {
 	@Autowired private CustomServiceService service;
 	@RequestMapping("/index")
-	public String index(){
-		SysUser user = getUser();
+	public String index(HttpServletRequest request){
+		SysUser user = getUser(request);
 		List<CustomServiceGroup> list = service.findGroupsByUser(user.getId());
 		request.setAttribute("list", list);
 		Map<Integer, List<CustomService>> map = new HashMap<Integer, List<CustomService>>();

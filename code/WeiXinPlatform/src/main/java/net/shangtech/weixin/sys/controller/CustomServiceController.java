@@ -27,8 +27,8 @@ public class CustomServiceController extends BaseController {
 	@Autowired private CustomServiceService service;
 	private static final String PATH = "user/application/custom";
 	@RequestMapping("/list")
-	public String list(){
-		List<CustomServiceGroup> list = service.findGroupsByUser(getUser().getId());
+	public String list(HttpServletRequest request){
+		List<CustomServiceGroup> list = service.findGroupsByUser(getUser(request).getId());
 		request.setAttribute("list", list);
 		Map<Integer, List<CustomService>> map = new HashMap<Integer, List<CustomService>>();
 		for(CustomServiceGroup group : list){
@@ -39,15 +39,15 @@ public class CustomServiceController extends BaseController {
 	}
 	
 	@RequestMapping("/list/{group}")
-	public String listByGroup(@PathVariable Integer group){
+	public String listByGroup(HttpServletRequest request, @PathVariable Integer group){
 		List<CustomService> list = service.findServiceByGroup(group);
 		request.setAttribute("list", list);
 		return PATH + "/list-group";
 	}
 	
 	@RequestMapping("/group/form")
-	public String groupForm(){
-		Integer id = getId();
+	public String groupForm(HttpServletRequest request){
+		Integer id = getId(request);
 		CustomServiceGroup group = new CustomServiceGroup();
 		if(id != null){
 			group = service.findGroupById(id);
@@ -57,31 +57,29 @@ public class CustomServiceController extends BaseController {
 	}
 	
 	@RequestMapping("/group/save")
-	public String saveGroup(HttpServletResponse response, CustomServiceGroup group){
-		this.response = response;
+	public String saveGroup(HttpServletRequest request, HttpServletResponse response, CustomServiceGroup group){
 		if(group.getId() == null){
-			group.setSysUserId(getUser().getId());
+			group.setSysUserId(getUser(request).getId());
 		}
 		service.saveServiceGroup(group);
-		return success(group.getId()+"");
+		return success(response, group.getId()+"");
 	}
 	
 	@RequestMapping("/group/delete")
-	public String deleteGroup(HttpServletResponse response){
-		this.response = response;
-		Integer id = getId();
+	public String deleteGroup(HttpServletRequest request, HttpServletResponse response){
+		Integer id = getId(request);
 		service.deleteGroup(id);
-		return success();
+		return success(response);
 	}
 	
 	@RequestMapping("/form")
-	public String form(){
+	public String form(HttpServletRequest request){
 		CustomService service = new CustomService();
-		Integer id = getId();
+		Integer id = getId(request);
 		if(id != null){
 			service = this.service.find(id);
 		}else{
-			service.setGroupId(getInt("group"));
+			service.setGroupId(getInt(request, "group"));
 		}
 		request.setAttribute("service", service);
 		return PATH + "/form";
@@ -89,7 +87,6 @@ public class CustomServiceController extends BaseController {
 	
 	@RequestMapping("/save")
 	public String save(HttpServletRequest request, HttpServletResponse response, CustomService service){
-		this.response = response;
 		try{
 			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 			MultipartFile image = multipartRequest.getFile("image_file");
@@ -99,16 +96,15 @@ public class CustomServiceController extends BaseController {
 			this.service.saveCustomService(service);
 		}catch(IOException e){
 			e.printStackTrace();
-			return failed("文件保存出错");
+			return failed(response, "文件保存出错");
 		}
-		return success();
+		return success(response);
 	}
 	
 	@RequestMapping("/delete")
-	public String delete(HttpServletResponse response){
-		this.response = response;
-		Integer id = getId();
+	public String delete(HttpServletRequest request, HttpServletResponse response){
+		Integer id = getId(request);
 		service.delete(id);
-		return success();
+		return success(response);
 	}
 }

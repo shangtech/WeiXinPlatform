@@ -57,8 +57,8 @@ public class ServiceController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/wxmenu")
-	public String wxmenu(){
-		SysUser user = getUser();
+	public String wxmenu(HttpServletRequest request){
+		SysUser user = getUser(request);
 		List<WxMenu> list = menuService.findBySysUser(user.getId());
 		request.setAttribute("list", list);
 		return "user/service/menu";
@@ -70,9 +70,8 @@ public class ServiceController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/wxmenu/save")
-	public String saveMenu(HttpServletResponse response){
-		this.response = response;
-		Integer id = super.getId();
+	public String saveMenu(HttpServletRequest request, HttpServletResponse response){
+		Integer id = super.getId(request);
 		WxMenu menu = new WxMenu();
 		String menuName = request.getParameter("menuName");
 		String parentId = request.getParameter("parentId");
@@ -80,11 +79,11 @@ public class ServiceController extends BaseController {
 		if(StringUtils.isBlank(parentId)){
 			parentId = "0";
 		}
-		SysUser user = getUser();
+		SysUser user = getUser(request);
 		if(id != null){
 			menu = menuService.find(id);
 			if(menu == null)
-				return failed("记录不存在");
+				return failed(response, "记录不存在");
 			if(menu.getSysUserId() != user.getId()){
 				//return failed("无权限");
 			}
@@ -105,10 +104,10 @@ public class ServiceController extends BaseController {
 			menu.setParentId(parent);
 			int count = menuService.countByUserAndParent(0, parent);
 			if(parent == 0 && count >= 3){
-				return failed("一级菜单最多三个");
+				return failed(response, "一级菜单最多三个");
 			}
 			if(parent != 0 && count >= 5){
-				return failed("二级菜单最多五个");
+				return failed(response, "二级菜单最多五个");
 			}
 			menu.setSort(count+1);
 			menu.setSysUserId(user.getId());
@@ -120,7 +119,7 @@ public class ServiceController extends BaseController {
 		obj.put("menuName", menu.getMenuName());
 		obj.put("menuUrl", menu.getMenuUrl());
 		obj.put("id", menu.getId());
-		out(obj.toJSONString());
+		out(response, obj.toJSONString());
 		return null;
 	}
 	
@@ -131,34 +130,32 @@ public class ServiceController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/wxmenu/delete")
-	public String deleteMenu(HttpServletResponse response){
-		this.response = response;
-		Integer id = getId();
+	public String deleteMenu(HttpServletRequest request, HttpServletResponse response){
+		Integer id = getId(request);
 		if(id == null){
-			return failed("未选择");
+			return failed(response, "未选择");
 		}
 		WxMenu menu = menuService.find(id);
 		if(menu == null){
-			return failed("记录不存在");
+			return failed(response, "记录不存在");
 		}
-		SysUser user = getUser();
+		SysUser user = getUser(request);
 		if(menu.getSysUserId() != user.getId()){
-			return failed("无权限");
+			return failed(response, "无权限");
 		}
 		if(menu.getParentId() == 0){
 			int count = menuService.countByUserAndParent(user.getId(), id);
 			if(count > 0){
-				return failed("请先删除子菜单");
+				return failed(response, "请先删除子菜单");
 			}
 		}
 		menuService.delete(id);
-		return success(String.valueOf(id));
+		return success(response, String.valueOf(id));
 	}
 	
 	@RequestMapping("/wxmenu/sync")
-	public String syncMenu(HttpServletResponse response){
-		this.response = response;
-		SysUser user = getUser();
+	public String syncMenu(HttpServletRequest request, HttpServletResponse response){
+		SysUser user = getUser(request);
 		JSONArray array = new JSONArray();
 		List<WxMenu> list = menuService.findBySysUser(user.getId());
 		for(WxMenu menu : list){
@@ -220,7 +217,7 @@ public class ServiceController extends BaseController {
 		HttpClient client = HttpUtil.createSSLInsecureClient();
 		String accessToken = HttpUtil.getAccessToken(client, user);
 		if(accessToken == null){
-			return failed("同步发生异常,请联系系统管理员");
+			return failed(response, "同步发生异常,请联系系统管理员");
 		}
 		HttpPost post = new HttpPost(Config.URL_POST_MENU_CREATE + "access_token=" + accessToken);
 		HttpEntity entity = new StringEntity(result.toJSONString(), "UTF-8");
@@ -228,16 +225,16 @@ public class ServiceController extends BaseController {
 		try {
 			String resp = HttpUtil.post(client, post);
 			if(StringUtils.isBlank(resp)){
-				return failed("同步失败");
+				return failed(response, "同步失败");
 			}
 			JSONObject json = JSON.parseObject(resp);
 			if("0".equals(json.getString("errcode"))){
-				return success("同步成功");
+				return success(response, "同步成功");
 			}
-			return failed("同步失败");
+			return failed(response, "同步失败");
 		} catch (Exception e) {
 			e.printStackTrace();
-			return failed("同步发生异常,请联系系统管理员");
+			return failed(response, "同步发生异常,请联系系统管理员");
 		}
 	}
 	
@@ -247,30 +244,29 @@ public class ServiceController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/wxmenu/sort")
-	public String sortMenu(HttpServletResponse response){
-		this.response = response;
+	public String sortMenu(HttpServletRequest request, HttpServletResponse response){
 		String sortStr = request.getParameter("sort");
 		if(StringUtils.isBlank(sortStr)){
-			return failed("参数无效");
+			return failed(response, "参数无效");
 		}
 		String[] sorts = sortStr.split(",");
-		SysUser user = getUser();
+		SysUser user = getUser(request);
 		List<WxMenu> list = new ArrayList<WxMenu>();
 		for(String sort : sorts){
 			String[] menuSort = sort.split(":");
 			if(menuSort.length != 2){
-				return failed("参数无效");
+				return failed(response, "参数无效");
 			}
 			Integer id = Integer.parseInt(menuSort[0]);
 			WxMenu menu = menuService.find(id);
 			if(menu == null || menu.getSysUserId() != user.getId()){
-				return failed("参数无效");
+				return failed(response, "参数无效");
 			}
 			menu.setSort(Integer.parseInt(menuSort[1]));
 			list.add(menu);
 		}
 		menuService.update(list);
-		return success();
+		return success(response);
 	}
 	
 	/**
@@ -278,24 +274,24 @@ public class ServiceController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/messages")
-	public String messages(){
-		return messagesPage("1");
+	public String messages(HttpServletRequest request){
+		return messagesPage(request, "1");
 	}
 	@RequestMapping("/messages/p{pageInfo}")
-	public String messagesPage(@PathVariable String pageInfo){
+	public String messagesPage(HttpServletRequest request, @PathVariable String pageInfo){
 		int pageSize = super.parsePageSize(pageInfo, 8);
 		int pageNo = super.parsePageNo(pageInfo);
-		SysUser user = super.getUser();
+		SysUser user = super.getUser(request);
 		Page<WxMessage> page = messageService.findMessageByPage(pageNo, pageSize, user.getId());
 		request.setAttribute("page", page);
 		return "user/service/messages";
 	}
 	
 	@RequestMapping("/messages/single")
-	public String messageEditSingle(){
+	public String messageEditSingle(HttpServletRequest request){
 		WxMessage message = new WxMessage();
 		message.setCreateTime(new Date());
-		Integer id = getId();
+		Integer id = getId(request);
 		if(id != null){
 			message = messageService.find(id);
 		}
@@ -303,10 +299,10 @@ public class ServiceController extends BaseController {
 		return "user/service/single-messages";
 	}
 	@RequestMapping("/messages/multiple")
-	public String messageEditMultiple(){
+	public String messageEditMultiple(HttpServletRequest request){
 		WxMessage message = new WxMessage();
 		message.setCreateTime(new Date());
-		Integer id = getId();
+		Integer id = getId(request);
 		if(id != null){
 			message = messageService.find(id);
 			message.setSubMessages(messageService.find("where mainId=?", message.getId()));
@@ -315,18 +311,16 @@ public class ServiceController extends BaseController {
 		return "user/service/multiple-messages";
 	}
 	@RequestMapping("/messages/single/save")
-	public String singleMessagesSave(WxMessage message, HttpServletResponse response){
-		this.response = response;
-		SysUser user = getUser();
+	public String singleMessagesSave(HttpServletRequest request, WxMessage message, HttpServletResponse response){
+		SysUser user = getUser(request);
 		message.setSysUserId(user.getId());
 		message.setCreateTime(new Date());
 		messageService.saveMessages(Arrays.asList(message));
-		return success();
+		return success(response);
 	}
 	@RequestMapping("/messages/multiple/save")
-	public String multipleMessagesSave(HttpServletResponse response){
-		this.response = response;
-		SysUser user = getUser();
+	public String multipleMessagesSave(HttpServletRequest request, HttpServletResponse response){
+		SysUser user = getUser(request);
 		String ids = request.getParameter("ids");
 		//ids是各个表单字段后缀,ids出现的顺序也就是消息的顺序
 		String[] idArr = ids.split(",");
@@ -334,47 +328,46 @@ public class ServiceController extends BaseController {
 		for(String id : idArr){
 			WxMessage message = new WxMessage();
 			message.setSysUserId(user.getId());
-			message.setId(getInt("id_"+id));
-			message.setTitle(getString("title_"+id));
-			message.setImage(getString("image_"+id));
-			message.setContent(getString("content_"+id));
+			message.setId(getInt(request, "id_"+id));
+			message.setTitle(getString(request, "title_"+id));
+			message.setImage(getString(request, "image_"+id));
+			message.setContent(getString(request, "content_"+id));
 			list.add(message);
 		}
 		messageService.saveMessages(list);
-		return success();
+		return success(response);
 	}
 	private static List<String> ALLOW_TYPES = Arrays.asList(".jpg", ".jpeg", ".png");
 	@RequestMapping("/messages/image/save")
 	public String imageSave(HttpServletResponse response, HttpServletRequest request){
-		this.response = response;
 		MultipartFile file = null;
 		try{
 			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 			file = multipartRequest.getFile("image");
 			if(file == null){
-				return failed("文件上传失败");
+				return failed(response, "文件上传失败");
 			}
 			String name = file.getOriginalFilename();
 			if(StringUtils.isBlank(name) || !name.contains(".")){
-				return failed("文件格式错误");
+				return failed(response, "文件格式错误");
 			}
 			String extend = name.substring(name.lastIndexOf("."));
 			if(!ALLOW_TYPES.contains(extend)){
-				return failed("不支持的文件格式");
+				return failed(response, "不支持的文件格式");
 			}
 			String path = FileUtils.saveStreamToFile(file.getInputStream(), file.getOriginalFilename());
-			return success(path);
+			return success(response, path);
 		}catch(ClassCastException e){
 			e.printStackTrace();
-			return failed("保存文件失败");
+			return failed(response, "保存文件失败");
 		}catch(IOException e){
 			e.printStackTrace();
-			return failed("保存文件失败");
+			return failed(response, "保存文件失败");
 		}
 	}
 	@RequestMapping("/messages/delete")
-	public String deleteMessages(HttpServletResponse response){
-		this.response = response;
+	public String deleteMessages(HttpServletRequest request, HttpServletResponse response){
+		
 		return null;
 	}
 }

@@ -48,8 +48,8 @@ public class PropertyController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/projects")
-	public String projects(){
-		SysUser user = getUser();
+	public String projects(HttpServletRequest request){
+		SysUser user = getUser(request);
 		List<ProjectType> typeList = projectService.findProjectTypesByUser(user.getId());
 		request.setAttribute("typeList", typeList);
 		Map<Integer, List<SubProject>> map = new HashMap<Integer, List<SubProject>>();
@@ -68,8 +68,8 @@ public class PropertyController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/projects/type")
-	public String projectsByType(){
-		Integer type = getInt("type");
+	public String projectsByType(HttpServletRequest request){
+		Integer type = getInt(request, "type");
 		List<SubProject> list = projectService.findByProjectType(type);
 		request.setAttribute("list", list);
 		return PATH + "/projects-by-type";
@@ -94,7 +94,6 @@ public class PropertyController extends BaseController {
 	 */
 	@RequestMapping("/house/save")
 	public String saveProjectHouse(HttpServletRequest request, HttpServletResponse response, HouseInfo house){
-		this.response = response;
 		try{
 			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 			MultipartFile image = multipartRequest.getFile("house_image");
@@ -104,9 +103,9 @@ public class PropertyController extends BaseController {
 			projectService.saveHouse(house);
 		}catch(IOException e){
 			e.printStackTrace();
-			return failed("文件保存错误");
+			return failed(response, "文件保存错误");
 		}
-		return success();
+		return success(response);
 	}
 	
 	/**
@@ -116,8 +115,8 @@ public class PropertyController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/project/houses")
-	public String projectHouses(){
-		Integer projectId = getInt("projectId");
+	public String projectHouses(HttpServletRequest request){
+		Integer projectId = getInt(request, "projectId");
 		List<HouseInfo> list = projectService.findHousesByProject(projectId);
 		request.setAttribute("list", list);
 		return PATH + "/project-houses";
@@ -130,10 +129,9 @@ public class PropertyController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/type/save")
-	public String projectTypeSave(HttpServletResponse response){
-		this.response = response;
-		SysUser user = getUser();
-		Integer id = super.getId();
+	public String projectTypeSave(HttpServletRequest request, HttpServletResponse response){
+		SysUser user = getUser(request);
+		Integer id = super.getId(request);
 		String typeName = request.getParameter("typeName");
 		String nameEn =request.getParameter("nameEn");
 		ProjectType type = new ProjectType();
@@ -149,7 +147,7 @@ public class PropertyController extends BaseController {
 		obj.put("success", true);
 		obj.put("msg", "保存成功");
 		obj.put("id", type.getId());
-		outJson(obj.toJSONString());
+		outJson(response, obj.toJSONString());
 		return null;
 	}
 	
@@ -161,17 +159,15 @@ public class PropertyController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/type/delete")
-	public String propertyTypeDelete(HttpServletResponse response){
-		this.response = response;
-		Integer id = getId();
+	public String propertyTypeDelete(HttpServletRequest request, HttpServletResponse response){
+		Integer id = getId(request);
 		projectService.deleteProjectType(id);
-		return success();
+		return success(response);
 	}
 	
 	@RequestMapping("/project/save")
 	public String saveProject(HttpServletRequest request, HttpServletResponse response, SubProject project){
-		this.response = response;
-		SysUser user = getUser();
+		SysUser user = getUser(request);
 		project.setSysUserId(user.getId());
 		try{
 			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
@@ -181,7 +177,7 @@ public class PropertyController extends BaseController {
 			MultipartFile imageTraffic = multipartRequest.getFile("image_traffic");//交通配套封面图
 			List<MultipartFile> projectImageList = multipartRequest.getFiles("project_image");//楼盘图片
 			if(image == null){
-				return failed("请上传封面图");
+				return failed(response, "请上传封面图");
 			}
 			project.setImage(FileUtils.saveStreamToFile(image.getInputStream(), image.getOriginalFilename()));
 			project.setImageDescription(FileUtils.saveStreamToFile(imageDescription.getInputStream(), imageDescription.getOriginalFilename()));
@@ -197,13 +193,13 @@ public class PropertyController extends BaseController {
 			JSONObject obj = new JSONObject();
 			obj.put("success", true);
 			obj.put("image", project.getImage());
-			out(obj.toJSONString());
+			out(response, obj.toJSONString());
 		}catch(ClassCastException e){
 			e.printStackTrace();
-			return failed("文件上传错误");
+			return failed(response, "文件上传错误");
 		}catch(IOException e){
 			e.printStackTrace();
-			return failed("文件保存失败");
+			return failed(response, "文件保存失败");
 		}
 		return null;
 	}
@@ -215,23 +211,22 @@ public class PropertyController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/project/delete")
-	public String projectDelete(HttpServletResponse response){
-		this.response = response;
-		Integer id = getId();
+	public String projectDelete(HttpServletRequest request, HttpServletResponse response){
+		Integer id = getId(request);
 		projectService.delete(id);
-		return success();
+		return success(response);
 	}
 	
 	@RequestMapping("/project/form")
-	public String projectForm(){
-		Integer id = getId();
+	public String projectForm(HttpServletRequest request){
+		Integer id = getId(request);
 		SubProject project = new SubProject();
 		if(id != null){
 			project = projectService.find(id);
 			List<HouseInfo> houses = projectService.findHousesByProject(id);
 			request.setAttribute("houses", houses);
 		}else{
-			project.setType(getInt("type"));
+			project.setType(getInt(request, "type"));
 		}
 		request.setAttribute("project", project);
 		return PATH + "/project-form";
@@ -245,7 +240,6 @@ public class PropertyController extends BaseController {
 	 */
 	@RequestMapping("/panorama/save")
 	public String panoramaSave(HttpServletRequest request, HttpServletResponse response){
-		this.response = response;
 		try{
 			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 			MultipartFile front = multipartRequest.getFile("image_front");
@@ -265,30 +259,29 @@ public class PropertyController extends BaseController {
 			p.setTitle(title);
 			HousePanorama hp = new HousePanorama();
 			hp.setImageName(title);
-			hp.setHouseId(getInt("houseId"));
-			hp.setSort(getInt("sort"));
+			hp.setHouseId(getInt(request, "houseId"));
+			hp.setSort(getInt(request, "sort"));
 			hp.setPanorama(p);
 			projectService.savePanorama(hp);
 		}catch(IOException e){
 			e.printStackTrace();
-			return failed("文件保存出错");
+			return failed(response, "文件保存出错");
 		}
-		return success();
+		return success(response);
 	}
 	
 	@RequestMapping("/panorama/list")
-	public String panoramaList(){
-		Integer houseId = getInt("house");
+	public String panoramaList(HttpServletRequest request){
+		Integer houseId = getInt(request, "house");
 		List<HousePanorama> list = projectService.findPanoramasByHouse(houseId);
 		request.setAttribute("list", list);
 		return PATH + "/house-3d-images";
 	}
 	
 	@RequestMapping("/panorama/delete")
-	public String panoramaDelete(HttpServletResponse response){
-		this.response = response;
-		Integer id = getId();
+	public String panoramaDelete(HttpServletRequest request, HttpServletResponse response){
+		Integer id = getId(request);
 		projectService.deletePanorama(id);
-		return success();
+		return success(response);
 	}
 }
