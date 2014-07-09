@@ -261,7 +261,7 @@
 				        <div class="controls">
 				        <div class="row-fluid">
 				          <input name="imageName" class="span9" type="text" placeholder="全景图名称" />
-				          <input type="hidden" name="id" id="panorama-house-id"/>
+				          <input type="hidden" name="houseId" id="panorama-house-id"/>
 				        </div>
 				        </div>
 				    </div>
@@ -339,7 +339,7 @@
 				    </div>
 				    <div class="control-group">
 				    	<div class="controls">
-				    		<a href="javascript" class="btn submit">保存</a>
+				    		<a href="javascript:;" class="btn submit">保存</a>
 				    	</div>
 				    </div>
 				</form>

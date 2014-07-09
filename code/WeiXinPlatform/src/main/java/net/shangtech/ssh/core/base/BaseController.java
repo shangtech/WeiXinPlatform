@@ -26,13 +26,18 @@ public class BaseController extends BaseMVC {
 	@Override
 	public HttpServletRequest getRequest() {
 		return request;
+		//return ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
 	}
 	
 	protected SysUser getUser(){
 		//微信客户端请求的user保存在request中,后台操作请求保存在session中
-		SysUser user = (SysUser) request.getAttribute("sysUser");
-		if(user == null)
-			user = (SysUser) request.getSession().getAttribute("user");
+		SysUser user = (SysUser) getRequest().getAttribute("sysUser");
+		if(user == null){
+			Object obj = getRequest().getSession().getAttribute("user");
+			if(obj != null){
+				user = (SysUser) obj;
+			}
+		}
 		return user;
 	}
 

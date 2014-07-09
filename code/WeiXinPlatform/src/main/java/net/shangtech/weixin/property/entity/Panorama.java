@@ -12,7 +12,7 @@ public class Panorama extends IBaseEntity {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Column(name = "image_font")
+	@Column(name = "image_front")
 	private String imageFront;
 	
 	@Column(name = "image_back")

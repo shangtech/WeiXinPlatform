@@ -1,7 +1,8 @@
 package net.shangtech.weixin.type;
 
 public enum SiteTemplateType {
-	APPOINTMENT(1, "预约页面");
+	APPOINTMENT(1, "预约页面"),
+	CUSTOM_PAGE(2, "自定义页面");
 	private Integer type;
 	private String name;
 	SiteTemplateType(Integer type, String name){

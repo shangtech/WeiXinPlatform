@@ -6,9 +6,12 @@ import java.util.Map;
 
 import net.shangtech.ssh.core.base.BaseController;
 import net.shangtech.weixin.property.entity.HouseInfo;
+import net.shangtech.weixin.property.entity.HousePanorama;
+import net.shangtech.weixin.property.entity.Panorama;
 import net.shangtech.weixin.property.entity.ProjectImage;
 import net.shangtech.weixin.property.entity.ProjectType;
 import net.shangtech.weixin.property.entity.SubProject;
+import net.shangtech.weixin.property.service.HouseInfoService;
 import net.shangtech.weixin.property.service.ProjectService;
 import net.shangtech.weixin.sys.entity.SysUser;
 
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/weixin/application/property")
 public class PropertyController extends BaseController {
 	@Autowired private ProjectService projectService;
+	@Autowired private HouseInfoService houseService;
 	/**
 	 * 显示所有楼盘及分类
 	 * @author songxh
@@ -85,5 +89,40 @@ public class PropertyController extends BaseController {
 		List<HouseInfo> list = projectService.findHousesByProject(id);
 		request.setAttribute("list", list);
 		return "weixin/property/project-houses";
+	}
+	
+	@RequestMapping("/project/3d/houses")
+	public String project3DHouses(){
+		Integer id = getId();
+		List<HouseInfo> list = projectService.findHousesByProject(id);
+		request.setAttribute("list", list);
+		return "weixin/property/project-houses-3d";
+	}
+	
+	@RequestMapping("/project/3d/house")
+	public String project3DHouse(){
+		Integer house = getInt("house");
+		HouseInfo houseInfo = houseService.find(house);
+		SubProject project = projectService.find(houseInfo.getProjectId());
+		request.setAttribute("project", project);
+		List<HousePanorama> list = projectService.findPanoramasByHouse(house);
+		request.setAttribute("list", list);
+		return "weixin/property/project-house-3d";
+	}
+	
+	@RequestMapping("/project/3d/panorama")
+	public String project3D(){
+		Integer id = getId();
+		Panorama p = projectService.findPanoramaById(id);
+		request.setAttribute("p", p);
+		return "weixin/property/project-house-3d-panorama";
+	}
+	
+	@RequestMapping("/project/3d/panorama/data")
+	public String project3DData(){
+		Integer id = getId();
+		Panorama p = projectService.findPanoramaById(id);
+		request.setAttribute("p", p);
+		return "weixin/property/project-house-3d-panorama-data";
 	}
 }

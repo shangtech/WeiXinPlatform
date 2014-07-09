@@ -66,7 +66,7 @@
             <!--楼盘详情-->
             <a href="project/description.htm?id=${project.id}"><div class="col-xs-4 click-1"></div></a> 	
             <!--360看房-->
-            <a href="#"><div class="col-xs-4 click-2"></div></a>   
+            <a href="project/3d/houses.htm?id=${project.id}"><div class="col-xs-4 click-2"></div></a>   
             <!--地图-->
             <a href="http://api.map.baidu.com/marker?location=${project.latitude},${project.longitude}&title=${project.projectName}&content=${project.projectName}&output=html"><div class="col-xs-4 click-3"></div></a>  
         </div>

@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/content/common/taglibs.jsp"%>
 					<c:forEach items="${list}" var="item">
 						<tr data-id="${item.id}">
-							<td>${item.panoramaName}</td>
+							<td>${item.imageName}</td>
 							<td>${item.sort}</td>
 							<td class="btngroup tc">
 								<div class="btn-group">

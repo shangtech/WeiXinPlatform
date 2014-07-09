@@ -1,16 +1,20 @@
 package net.shangtech.weixin.sys.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.shangtech.ssh.core.base.BaseController;
+import net.shangtech.weixin.site.entity.CustomPage;
 import net.shangtech.weixin.site.entity.SiteInfo;
 import net.shangtech.weixin.site.entity.SiteTemplate;
+import net.shangtech.weixin.site.service.CustomPageService;
 import net.shangtech.weixin.site.service.SiteInfoService;
 import net.shangtech.weixin.site.service.SiteTemplateService;
 import net.shangtech.weixin.sys.entity.SysUser;
+import net.shangtech.weixin.type.SiteTemplateType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SiteController extends BaseController {
 	@Autowired private SiteTemplateService templateService;
 	@Autowired private SiteInfoService siteInfoService;
+	@Autowired private CustomPageService pageService;
 	/**
 	 * 设置微官网首页模板页面
 	 * @author songxh
@@ -74,5 +79,51 @@ public class SiteController extends BaseController {
 		Integer id = getId();
 		siteInfoService.delete(id);
 		return success();
+	}
+	
+	@RequestMapping("/page/list")
+	public String pageList(){
+		SysUser user = getUser();
+		List<CustomPage> list = pageService.find("where sysUserId=?", user.getId());
+		request.setAttribute("list", list);
+		return "user/application/site/page-list";
+	}
+	
+	@RequestMapping("/page/form")
+	public String pageForm(){
+		List<SiteTemplate> list = templateService.find("where type=?", SiteTemplateType.CUSTOM_PAGE.getType());
+		request.setAttribute("list", list);
+		CustomPage page = new CustomPage();
+		Integer id = getId();
+		if(id != null){
+			page = pageService.find(id);
+		}
+		request.setAttribute("page", page);
+		return "user/application/site/page-form";
+	}
+	
+	@RequestMapping("/page/save")
+	public String pageSave(HttpServletResponse response, CustomPage page){
+		this.response = response;
+		SysUser user = getUser();
+		page.setSysUserId(user.getId());
+		page.setCreateTime(new Date());
+		pageService.add(page);
+		return success();
+	}
+	
+	@RequestMapping("/page/delete")
+	public String pageDelete(HttpServletResponse response){
+		this.response = response;
+		Integer id = getId();
+		pageService.delete(id);
+		return success();
+	}
+	@RequestMapping("/page/form/temp")
+	public String pageFormTemp(){
+		Integer id = getId();
+		SiteTemplate temp = templateService.find(id);
+		request.setAttribute("temp", temp);
+		return "user/application/site/page-form-temp";
 	}
 }

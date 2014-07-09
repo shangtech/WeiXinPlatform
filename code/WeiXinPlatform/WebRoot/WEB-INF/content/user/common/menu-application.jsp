@@ -9,6 +9,7 @@
           <li<c:if test="${param.current eq 'newstype'}"> class="on"</c:if>><a href="${ctx}/manage/application/news/type/list.htm"><i class="pull-right icon-star"></i>资讯分类</a></li>
           <li<c:if test="${param.current eq 'news'}"> class="on"</c:if>><a href="${ctx}/manage/application/news/list.htm"><i class="pull-right icon-star"></i>资讯管理</a></li>
           <li<c:if test="${param.current eq 'custom'}"> class="on"</c:if>><a href="${ctx}/manage/application/custom/list.htm"><i class="pull-right icon-star"></i>客服管理</a></li>
+          <li<c:if test="${param.current eq 'custompage'}"> class="on"</c:if>><a href="${ctx}/manage/application/site/page/list.htm"><i class="pull-right icon-star"></i>特效页面</a></li>
         </ul>
       </div>
     </div>

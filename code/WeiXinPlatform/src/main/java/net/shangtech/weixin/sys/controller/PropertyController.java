@@ -13,6 +13,7 @@ import net.shangtech.ssh.core.base.BaseController;
 import net.shangtech.ssh.core.util.FileUtils;
 import net.shangtech.weixin.property.entity.HouseInfo;
 import net.shangtech.weixin.property.entity.HousePanorama;
+import net.shangtech.weixin.property.entity.Panorama;
 import net.shangtech.weixin.property.entity.ProjectImage;
 import net.shangtech.weixin.property.entity.ProjectType;
 import net.shangtech.weixin.property.entity.SubProject;
@@ -244,15 +245,50 @@ public class PropertyController extends BaseController {
 	 */
 	@RequestMapping("/panorama/save")
 	public String panoramaSave(HttpServletRequest request, HttpServletResponse response){
-		
-		return null;
+		this.response = response;
+		try{
+			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+			MultipartFile front = multipartRequest.getFile("image_front");
+			MultipartFile back = multipartRequest.getFile("image_back");
+			MultipartFile left = multipartRequest.getFile("image_left");
+			MultipartFile right = multipartRequest.getFile("image_right");
+			MultipartFile top = multipartRequest.getFile("image_top");
+			MultipartFile bottom = multipartRequest.getFile("image_bottom");
+			Panorama p = new Panorama();
+			p.setImageFront(FileUtils.saveStreamToFile(front.getInputStream(), front.getOriginalFilename()));
+			p.setImageBack(FileUtils.saveStreamToFile(back.getInputStream(), back.getOriginalFilename()));
+			p.setImageLeft(FileUtils.saveStreamToFile(left.getInputStream(), left.getOriginalFilename()));
+			p.setImageRight(FileUtils.saveStreamToFile(right.getInputStream(), right.getOriginalFilename()));
+			p.setImageTop(FileUtils.saveStreamToFile(top.getInputStream(), top.getOriginalFilename()));
+			p.setImageBottom(FileUtils.saveStreamToFile(bottom.getInputStream(), bottom.getOriginalFilename()));
+			String title = request.getParameter("imageName");
+			p.setTitle(title);
+			HousePanorama hp = new HousePanorama();
+			hp.setImageName(title);
+			hp.setHouseId(getInt("houseId"));
+			hp.setSort(getInt("sort"));
+			hp.setPanorama(p);
+			projectService.savePanorama(hp);
+		}catch(IOException e){
+			e.printStackTrace();
+			return failed("文件保存出错");
+		}
+		return success();
 	}
 	
 	@RequestMapping("/panorama/list")
 	public String panoramaList(){
-		Integer houseId = getInt("hosueId");
-		List<HousePanorama> list = projectService.findParoamasByHouse(houseId);
+		Integer houseId = getInt("house");
+		List<HousePanorama> list = projectService.findPanoramasByHouse(houseId);
 		request.setAttribute("list", list);
 		return PATH + "/house-3d-images";
+	}
+	
+	@RequestMapping("/panorama/delete")
+	public String panoramaDelete(HttpServletResponse response){
+		this.response = response;
+		Integer id = getId();
+		projectService.deletePanorama(id);
+		return success();
 	}
 }

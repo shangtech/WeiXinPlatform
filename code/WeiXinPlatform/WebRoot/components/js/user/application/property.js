@@ -196,6 +196,22 @@ $(document).ready(function(){
 			}
 		});
 	});
+	$('#projectFormModal').on('click', '#house-3d .submit', function(){
+		$('#house-3d form').ajaxSubmit({
+			dataType: 'json',
+			success: function(result){
+				if(!result.success){
+					alert(result.msg);
+					return;
+				}
+				$('#house-3d tbody').load('panorama/list.htm?house='+$('#panorama-house-id').val()+'&_='+new Date().getTime());
+				$('#house-3d form')[0].reset();
+			}
+		});
+	});
+//	$('#projectFormModal').on('show', function(){
+//		$('#projectName').focus();
+//	});
 	/**
 	 * 编辑户型信息
 	 * @param {Object} marker
@@ -213,7 +229,22 @@ $(document).ready(function(){
 		var id = $(this).parent().parent().parent().attr('data-id');
 		$('#panorama-house-id').val(id);
 		$('.nav-tabs #tab-3dimage').tab('show');
+		$('#house-3d tbody').load('panorama/list.htm?house='+id+'&_='+new Date().getTime());
 		$('.tab-pane.active').removeClass('active');
 		$('#house-3d').addClass('active');
+	});
+	$('#projectFormModal').on('click', '#house-3d tbody .remove', function(){
+		var id = $(this).parent().parent().parent().attr('data-id');
+		$.ajax({
+			url: 'panorama/delete.htm?id='+id,
+			dataType: 'json',
+			success: function(result){
+				if(!result.success){
+					alert(result.msg);
+					return;
+				}
+				$('#house-3d tbody').load('panorama/list.htm?house='+$('#panorama-house-id').val()+'&_='+new Date().getTime());
+			}
+		});
 	});
 });

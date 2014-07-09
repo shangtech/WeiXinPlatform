@@ -148,7 +148,8 @@ public class ProjectService extends BaseService<SubProject> {
 	 * @param panorama
 	 * @param houseParonama
 	 */
-	public void savePanorama(Panorama panorama, HousePanorama housePanorama){
+	public void savePanorama(HousePanorama housePanorama){
+		Panorama panorama = housePanorama.getPanorama();
 		panoramaDao.insert(panorama);
 		housePanorama.setPanoramaId(panorama.getId());
 		housePanoramaDao.insert(housePanorama);
@@ -165,12 +166,20 @@ public class ProjectService extends BaseService<SubProject> {
 		return imageDao.find("where projectId=?", projectId);
 	}
 	
-	public List<HousePanorama> findParoamasByHouse(int houseId){
+	public List<HousePanorama> findPanoramasByHouse(int houseId){
 		List<HousePanorama> list = housePanoramaDao.find("where houseId=?", houseId);
 		for(HousePanorama panorama : list){
 			panorama.setPanorama(panoramaDao.find(panorama.getPanoramaId()));
 		}
 		return list;
+	}
+	
+	public void deletePanorama(int id){
+		housePanoramaDao.delete(id);
+	}
+	
+	public Panorama findPanoramaById(int id){
+		return panoramaDao.find(id);
 	}
 	
 	@Override

@@ -87,7 +87,7 @@ public class AppointmentController extends BaseController {
 		service.delete(id);
 		return success();
 	}
-	private static List<String> ALLOW_TYPES = Arrays.asList(".jpg", ".jpeg", ".png");
+	private static List<String> ALLOW_TYPES = Arrays.asList(".jpg", ".jpeg", ".png", ".mp3");
 	/**
 	 * AJAX保存图片,返回保存后的路径
 	 * @author songxh
