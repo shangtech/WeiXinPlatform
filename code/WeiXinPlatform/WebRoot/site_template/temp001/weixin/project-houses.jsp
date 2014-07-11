@@ -48,7 +48,7 @@
         </c:forEach>
         <div class="row" style="margin:1em 0 0.5em 0;">
         	<div class="col-xs-3"></div>
-            <div class="col-xs-6"><img src="${ctx}/site_template/temp001/images/logo-2.png" class="img-responsive"/></div>
+            <div class="col-xs-6"><img src="${ctx}/${sessionScope.user.siteLogo}" class="img-responsive"/></div>
             <div class="col-xs-3"></div>
         </div>
     </div>

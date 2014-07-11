@@ -57,7 +57,7 @@ public class MainController extends BaseController {
 		}
 		//System.out.println(user.getPassword());
 		//System.out.println(EncoderUtils.MD5(username+"@"+password));
-		if(!user.getPassword().equals(EncoderUtils.MD5(username+"@"+password))){
+		if(!user.getPassword().equals(EncoderUtils.MD5(EncoderUtils.MD5(username+"@"+password)))){
 			return failed(response, "用户名或密码错误");
 		}
 		request.getSession().setAttribute("user", user);

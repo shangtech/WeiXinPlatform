@@ -34,7 +34,7 @@
         </div>
     </div>
     <div class="logo" style="">
-        <img src="images/fuwu_02.png" style="width:140px;display:block;margin:0 auto;padding:0 0 10px 0;" />
+        <img src="${ctx}/${sessionScope.user.siteLogo}" style="width:140px;display:block;margin:0 auto;padding:0 0 10px 0;" />
     </div>
 </body>
 </html>

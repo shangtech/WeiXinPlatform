@@ -47,7 +47,7 @@
        				<c:forEach items="${list}" var="item">
        				<tr data-id="${item.id}">
        					<td>${item.title}</td>
-       					<td>http://localhost/weixin/weixin/site/info.htm?id=${item.id}</td>
+       					<td>${basePath}/weixin/application/site/info.htm?id=${item.id}</td>
        					<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${item.createTime}"/></td>
        					<td class="btngroup tc">
        						<div class="btn-group">

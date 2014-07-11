@@ -35,6 +35,8 @@ public class EncoderUtils {
 	}
 	public static void main(String[] args){
 		System.out.println("1=" + EncoderUtils.MD5(EncoderUtils.MD5("songxh@19900212")));
+		System.out.println("2=" + EncoderUtils.MD5(EncoderUtils.MD5("2")));
+		System.out.println("xinyuantang="+EncoderUtils.MD5(EncoderUtils.MD5("xinyuantang@xinyuantang")));
 		System.out.println(EncoderUtils.SHA1("songxh"));
 	}
 }

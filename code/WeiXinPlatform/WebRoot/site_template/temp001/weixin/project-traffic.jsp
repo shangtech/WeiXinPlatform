@@ -64,11 +64,11 @@
         </div>
         <div class="row">
         	<!--楼盘的电话修改-->
-        	<a href="tel:02862358080">
+        	<a href="tel:${sessionScope.user.siteTel}">
         	<div id="tel" class="col-xs-12 text-center">
             	<i class="iconfont">&#x3439;</i>
                 <!--楼盘的电话修改-->
-            	<span>028-62358080</span>
+            	<span>${sessionScope.user.siteTel}</span>
             </div>
             </a>
         </div>

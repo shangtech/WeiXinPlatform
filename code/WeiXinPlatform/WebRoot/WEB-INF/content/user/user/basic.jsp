@@ -89,7 +89,7 @@
 		    <div class="control-group">
 		        <label for="siteLogo" class="control-label">网站LOGO</label>
 		        	<div class="controls uploader">
-        				<input type="file" id="image" class="span9" data-for="image"/>
+        				<input type="file" id="image" class="span9" name="image_file" data-for="image"/>
         				<div class="input-append span9">
         					<span class="span12 fileholder" id="fileholder-image">请选择文件</span>
         					<span class="btn span2 filebtn action" id="filebtn-image">选择</span>
