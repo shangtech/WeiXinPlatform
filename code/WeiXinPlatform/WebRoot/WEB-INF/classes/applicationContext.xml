@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	<import  resource="dataSource-mssqlserver.xml"/>
+	
+	<context:component-scan base-package="net.shangtech.weixin.*.dao"></context:component-scan>
+	<context:component-scan base-package="net.shangtech.weixin.*.service"></context:component-scan>
+	
+	<bean id="sqlDao" class="net.shangtech.ssh.core.base.SqlDao">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	<!-- 测试证明如果service方法里包含hibernateDao和jdbcDao操作异常可以回滚 -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+</beans>

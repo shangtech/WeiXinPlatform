@@ -45,8 +45,15 @@
 	<link rel="stylesheet" type="text/css" href="${ctx}/site_template/${temp.path}/css/modules.css?v=1.5"/>
 	<link rel="stylesheet" type="text/css" href="${ctx}/site_template/${temp.path}/css/page.css?v=1.5"/>
 <head>
-
-<body class="app" data-app-id="3466">
+	<%
+	CustomPage _page = (CustomPage)request.getAttribute("page");
+	String data = _page.getData();
+	String music = data.substring(0, data.indexOf(";"));
+	String pics = data.substring(data.indexOf(";")+1);
+	String background = pics.substring(0, pics.indexOf(";"));
+	pics = pics.substring(pics.indexOf(";")+1);
+	%>
+<body class="app" data-app-id="3466" style="background:url('${ctx}/<%=background%>');">
 	<!--app loading-->
 	<div id="app-loading" class="app-loading">
 		<div class="cycleWrap">
@@ -62,12 +69,6 @@
 		</div>
 	</div>
 	<!--app loading end-->
-	<%
-	CustomPage _page = (CustomPage)request.getAttribute("page");
-	String data = _page.getData();
-	String music = data.substring(0, data.indexOf(";"));
-	String pics = data.substring(data.indexOf(";")+1);
-	%>
 	<c:set var="music" value="<%=music%>"></c:set>
 	<c:set var="pics" value="<%=pics%>"></c:set>
 	<!--app header-->

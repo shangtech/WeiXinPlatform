@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.i18n.encoding" value="utf-8"/>
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<constant name="struts.multipart.saveDir" value="C:/tmp"/>
+	<constant name="struts.devMode" value="false" />
+	<constant name="struts.convention.default.parent.package" value="default"/>
+	<constant name="struts.convention.package.locators" value="action"/>
+	<constant name="struts.convention.package.locators.basePackage" value="net.shangtech.weixin"/>
+	<constant name="struts.ognl.allowStaticMethodAccess" value="true"/>
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"/>
+	<constant name="struts.multipart.maxSize" value="2097152"/>
+	<package name="default" namespace="/" extends="convention-default">
+
+	</package>
+</struts>
