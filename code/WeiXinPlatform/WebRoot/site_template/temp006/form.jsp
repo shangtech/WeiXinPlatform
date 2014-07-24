@@ -41,8 +41,8 @@
 			    		var music = $('#music_hidden').val();
 			    		var images = $('input[id^="image_"][id$="_hidden"]');
 			    		var data = music;
-			    		var backgroundImage = $('#background_image').val();
-			    		var data += ';'+backgroundImage;
+			    		var backgroundImage = $('#background_image_hidden').val();
+			    		data += ';'+backgroundImage;
 			    		for(var i = 0; i < images.length; i++){
 			    			var image = $(images[i]).val();
 			    			data += ';' + image;
