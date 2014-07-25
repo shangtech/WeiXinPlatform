@@ -75,7 +75,7 @@
 	<header class="app-header">
 			<a href="javascript:void(0);" class="u-globalAudio">
 				<i class="icon-music"></i>
-				<audio src="${ctx}/site_template/${temp.path}/${music}" autoplay="autoplay" loop="loop"></audio>
+				<audio src="${ctx}/${music}" autoplay="autoplay" loop="loop"></audio>
 			</a>																																																																			</header>
 	<!--app header end-->
 	<!--app content-->
