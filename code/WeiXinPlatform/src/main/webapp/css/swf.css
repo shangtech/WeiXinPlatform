@@ -1,0 +1,96 @@
+@CHARSET "UTF-8";
+html, body { 
+  height: 100%; 
+  margin: 0; 
+  padding: 0; 
+  width: 100%;
+  overflow:hidden;
+} 
+#header { 
+  height: 51px; 
+  position: absolute;
+  top: 0; 
+  width: 100%; 
+} 
+#main { 
+  bottom: 0px; 
+  left: 0; 
+  position: absolute; 
+  right: 0; 
+  top: 51px; 
+  padding-top:8px;
+} 
+#sidenav { 
+  height: 100%;
+  _height: auto;
+  width: auto;
+  padding:0px 0px 0px 0px;
+  padding:0px 0px 0px 0px;
+  *padding:0px 0px 0px 0px;
+  _padding:0px 0px 0px 0px;
+}
+#flash{
+  height: 100%;
+  _height: auto;
+  width: 100%;
+  _width: auto;
+  margin:0px 0px -60px 0px;
+  margin:0px 0px -60px 0px\9;
+  *margin:0px 0px -60px 0px;
+  _margin:0px 0px -100px 0px;
+}
+#flash_nei{
+  height: 100%;
+  _height: auto;
+  width: 100%;
+  _width: auto;
+}
+#content { 
+  height: 100%; 
+  width: 220px; 
+  float:right;
+  clear:right;
+}
+#news { 
+width: 220px;
+height:auto;
+}
+#contant { 
+  height: 56px; 
+  position: absolute;
+  margin-top:-58px;
+  top: 100%; 
+  width: 220px;
+}
+#topnav {
+  height: 21px; 
+  position: absolute;
+  margin-top:-50px;
+  top: 100%; 
+  width: 100%; 
+}
+#bottom_left{
+  float:left;
+}
+#bottom_right{
+  height: 100%;
+  width: 220px;
+  float:right;
+}
+#footer { 
+  height: 30px; 
+  margin-top: -30px; 
+  position: absolute; 
+  top: 100%; 
+  width: 100%; 
+} 
+
+#main_product { 
+  bottom: 30px; 
+  left: 0; 
+  position: absolute; 
+  right: 0; 
+  top: 51px; 
+  padding-top:8px;
+} 
+#pano{ width:auto;height:auto;}

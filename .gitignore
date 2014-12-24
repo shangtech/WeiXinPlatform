@@ -3,11 +3,12 @@
 #################
 
 *.pydevproject
-#.project
+.project
 .metadata
 .mymetadata
 bin/
 tmp/
+target/
 code/WeiXinplatform/WebRoot/WEB-INF/classes/*
 code/WeiXinplatform/WebRoot/upload/*
 code/WeiXinplatform/target/*
@@ -17,7 +18,7 @@ code/WeiXinplatform/target/*
 *~.nib
 .settings/
 #local.properties
-#.classpath
+.classpath
 #.loadpath
 
 # External tool builders
